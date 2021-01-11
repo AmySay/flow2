@@ -1,0 +1,56 @@
+{
+  "name": "x-flowchart-vue",
+  "version": "3.0.0",
+  "description": "A visual graph editor based on G6 and Vue.",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OXOYO/X-Flowchart-Vue.git"
+  },
+  "keywords": [
+    "flowchart",
+    "vue-flowchart",
+    "g6",
+    "g6-editor",
+    "mind"
+  ],
+  "author": "OXOYO",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OXOYO/X-Flowchart-Vue/issues"
+  },
+  "homepage": "https://github.com/OXOYO/X-Flowchart-Vue#readme",
+  "dependencies": {
+    "@antv/g6": "3.1.3",
+    "core-js": "^2.6.5",
+    "iview": "^3.4.2",
+    "axios": "^0.21.1",
+    "element-ui": "2.12.0",
+    "js-cookie": "^2.2.1",
+    "mousetrap": "^1.6.3",
+    "register-service-worker": "^1.6.2",
+    "screenfull": "^4.2.1",
+    "v-click-outside": "^2.1.4",
+    "vue": "^2.6.10",
+    "vue-color": "^2.7.0",
+    "vue-i18n": "^8.14.0",
+    "vuex": "^3.0.1",
+    "x-highlight": "^1.0.5"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
