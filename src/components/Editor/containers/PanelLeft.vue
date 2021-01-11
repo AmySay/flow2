@@ -16,7 +16,8 @@
 </style>
 
 <template>
-  <CardBox class="panel-left" placement="left" position="right" :width="250" :title="$t('L10300')" @expand="toggleHandler">
+  <CardBox class="panel-left" placement="left" position="right" :width="250" :title="$t('L10300')"
+           @expand="toggleHandler">
     <CardItem
       v-for="(item, index) in materials"
       :key="index"
@@ -36,12 +37,45 @@
 </template>
 
 <script>
-  import config from '../config/index'
-
   import CardBox from '../components/CardBox'
   import CardItem from '../components/CardItem'
   import NodeElement from '../components/NodeElement'
 
+  const shapeControl = {
+    // 控制器
+    controllers: [
+      [0, 0, 'nwse-resize'],
+      [0, 0.5, 'ew-resize'],
+      [0, 1, 'nesw-resize'],
+      [0.5, 0, 'ns-resize'],
+      [0.5, 1, 'ns-resize'],
+      [1, 0, 'nesw-resize'],
+      [1, 0.5, 'ew-resize'],
+      [1, 1, 'nwse-resize']
+    ],
+    // 旋转
+    rotate: true
+  }
+
+  // 锚点坐标
+  const anchorPoints = [
+    [0, 0],
+    [0.25, 0],
+    [0.5, 0],
+    [0.75, 0],
+    [1, 0],
+    [1, 0.25],
+    [1, 0.5],
+    [1, 0.75],
+    [1, 1],
+    [0.75, 1],
+    [0.5, 1],
+    [0.25, 1],
+    [0, 1],
+    [0, 0.75],
+    [0, 0.5],
+    [0, 0.25]
+  ]
   export default {
     name: 'PanelLeft',
     components: {
@@ -49,16 +83,52 @@
       CardItem,
       NodeElement
     },
-    data () {
+    data() {
       return {}
     },
+    props: {
+      devices: {
+        type: Object,
+        default: () => {
+          return {}
+        }
+      }
+    },
     computed: {
-      materials () {
-        return config && Array.isArray(config.materials) ? config.materials.filter(item => item.enable) : []
+      materials() {
+        const materials = []
+        if (this.devices && Object.entries(this.devices).length) {
+          for (let k in this.devices) {
+            const temp = {
+              name: this.devices[k][0].type || '',
+              label: this.devices[k][0].type || '',
+              icon: '',
+              enable: true,
+              children: this.devices[k].map(item => {
+                  return {
+                    shape: item.name,
+                    label: item.name,
+                    defaultLabel: '',
+                    enable: true,
+                    width: 80,
+                    height: 40,
+                    minWidth: 20,
+                    minHeight: 20,
+                    anchorPoints: anchorPoints,
+                    shapeControl: shapeControl,
+                    icon: item.imgUrl
+                  }
+                }
+              )
+            }
+            materials.push(temp)
+          }
+        }
+        return materials
       }
     },
     methods: {
-      toggleHandler (data) {
+      toggleHandler(data) {
         let _t = this
         _t.$X.utils.bus.$emit('editor/panel/toggle', data)
       }

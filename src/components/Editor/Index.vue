@@ -19,7 +19,7 @@
   <div class="materials-editor" @click="handleEditorClick">
     <ToolBar></ToolBar>
     <Sketchpad></Sketchpad>
-    <PanelLeft></PanelLeft>
+    <PanelLeft :devices='devices'></PanelLeft>
     <PanelRight></PanelRight>
     <PreviewModel></PreviewModel>
     <ContextMenu></ContextMenu>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import {mapGetters} from 'vuex'
 
   import ToolBar from './containers/ToolBar'
   import Sketchpad from './containers/Sketchpad'
@@ -49,7 +49,8 @@
   // 热键
   import Mousetrap from 'mousetrap'
   import config from './config/index'
-
+  import {getDevice} from '../../api/svg'
+  import _ from 'lodash'
   export default {
     name: 'MaterialsEditor',
     components: {
@@ -60,8 +61,9 @@
       PreviewModel,
       ContextMenu
     },
-    data () {
+    data() {
       return {
+        devices: {},
         editorInfo: {},
         defInfo: {
           // 编辑器状态：add || edit || preview
@@ -85,7 +87,15 @@
       ])
     },
     methods: {
-      init () {
+      async getDevices() {
+        getDevice().then(res => {
+          this.devices = _.groupBy(res.data, 'typeId')
+          G6.devices = res.data
+        })
+      },
+      async init() {
+        await this.getDevices()
+
         let _t = this
         let el = _t.$el
         // 画板
@@ -205,8 +215,9 @@
         })
         // 挂载编辑器$X命名空间，用于Vue组件与Graph之间传值
         _t.editor.$X = {
-          ...config.$X
+          ...config.$X,
         }
+        _t.editor.devices = _t.devices
         // 挂载G6配置
         _t.editor.$C = G6.$C
         // 设置模式为编辑
@@ -261,46 +272,46 @@
         // 更新编辑器实例
         _t.$store.commit('editor/instance/update', _t.editor)
       },
-      _canvasMousedown () {
+      _canvasMousedown() {
         let _t = this
         console.log('_canvasMousedown ')
         _t.doClearAllStates()
         // 更新currentItem
         _t.$store.commit('editor/currentItem/update', [])
       },
-      _canvasMouseup () {
+      _canvasMouseup() {
         // let _t = this
         console.log('_canvasMouseup')
         // _t.editor.setMode('edit')
       },
-      _editorClick (event) {
+      _editorClick(event) {
         console.log('_editorClick', event)
       },
-      _nodeClick (event) {
+      _nodeClick(event) {
         // let _t = this
         console.log('_nodeClick', event)
         // _t.editor.setItemState(event.item, 'active', true)
       },
-      _nodeMousedown (event) {
+      _nodeMousedown(event) {
         let _t = this
         _t.doClearAllStates()
         _t.editor.setItemState(event.item, 'active', true)
       },
-      _nodeHover (event) {
+      _nodeHover(event) {
         let _t = this
         // FIXME 当节点未激活时才可设置hover true状态
         if (!event.item.hasState('active')) {
           _t.editor.setItemState(event.item, 'hover', true)
         }
       },
-      _nodeOut (event) {
+      _nodeOut(event) {
         let _t = this
         _t.editor.setItemState(event.item, 'hover', false)
       },
-      _nodeContextmenu (event) {
+      _nodeContextmenu(event) {
         console.log('_nodeContextmenu', event)
       },
-      _edgeMousedown (event) {
+      _edgeMousedown(event) {
         let _t = this
         _t.doClearAllStates()
         console.log('_edgeMousedown', event)
@@ -309,7 +320,7 @@
         }
       },
       // 清除所有状态
-      doClearAllStates () {
+      doClearAllStates() {
         let _t = this
         if (!_t.editor) {
           return
@@ -325,7 +336,7 @@
         _t.editor.paint()
         _t.editor.setAutoPaint(true)
       },
-      doZoom (info, position) {
+      doZoom(info, position) {
         let _t = this
         // 缩放率
         let ratio = 1
@@ -354,7 +365,7 @@
           _t.editor.zoomTo(ratio, center)
         }
       },
-      doAddNode (info) {
+      doAddNode(info) {
         let _t = this
         let node = {
           id: G6.Util.uniqueId(),
@@ -379,7 +390,7 @@
         // 广播事件，通过自定义交互 node-control 添加节点
         _t.editor.emit('editor:addNode', node)
       },
-      doSetMode (name) {
+      doSetMode(name) {
         let _t = this
         _t.mode = name
         _t.editor.setMode(name)
@@ -396,7 +407,7 @@
         })
         _t.$store.commit('editor/toolList/update', toolList)
       },
-      handleToolTrigger (info) {
+      handleToolTrigger(info) {
         let _t = this
         // 是否记录日志标识
         let isRecord = false
@@ -531,7 +542,7 @@
             _t.editor.getNodes().forEach(node => {
               if (node.hasState('active')) {
                 isRecord = true
-                let { style } = node.getModel()
+                let {style} = node.getModel()
                 _t.editor.updateItem(node, {
                   style: {
                     ...style,
@@ -546,7 +557,7 @@
             _t.editor.getEdges().forEach(edge => {
               if (edge.hasState('active')) {
                 isRecord = true
-                let { style } = edge.getModel()
+                let {style} = edge.getModel()
                 _t.editor.updateItem(edge, {
                   style: {
                     ...style,
@@ -558,7 +569,7 @@
             _t.editor.getNodes().forEach(node => {
               if (node.hasState('active')) {
                 isRecord = true
-                let { style } = node.getModel()
+                let {style} = node.getModel()
                 _t.editor.updateItem(node, {
                   style: {
                     ...style,
@@ -573,7 +584,7 @@
             _t.editor.getEdges().forEach(edge => {
               if (edge.hasState('active')) {
                 isRecord = true
-                let { style } = edge.getModel()
+                let {style} = edge.getModel()
                 _t.editor.updateItem(edge, {
                   style: {
                     ...style,
@@ -585,7 +596,7 @@
             _t.editor.getNodes().forEach(node => {
               if (node.hasState('active')) {
                 isRecord = true
-                let { style } = node.getModel()
+                let {style} = node.getModel()
                 _t.editor.updateItem(node, {
                   style: {
                     ...style,
@@ -601,7 +612,7 @@
             _t.editor.getEdges().forEach(edge => {
               if (edge.hasState('active')) {
                 isRecord = true
-                let { style } = edge.getModel()
+                let {style} = edge.getModel()
                 _t.editor.updateItem(edge, {
                   style: {
                     ...style,
@@ -613,7 +624,7 @@
             _t.editor.getNodes().forEach(node => {
               if (node.hasState('active')) {
                 isRecord = true
-                let { style } = node.getModel()
+                let {style} = node.getModel()
                 _t.editor.updateItem(node, {
                   style: {
                     ...style,
@@ -642,7 +653,7 @@
             _t.editor.getEdges().forEach(edge => {
               if (edge.hasState('active')) {
                 isRecord = true
-                let { style } = edge.getModel()
+                let {style} = edge.getModel()
                 _t.editor.updateItem(edge, {
                   style: {
                     ...style,
@@ -722,17 +733,17 @@
                       // 渲染
                       _t.editor.render()
                       _t.editor.getNodes().forEach(node => {
-                          let model = node.getModel()
-                          let radian = model.radian
-                          let keyShape = node.getKeyShape()
-                          keyShape.resetMatrix()
-                          keyShape.rotate(radian)
-                          let group = _t.editor.get('group')
-                          // 更新shapeControl
-                          utils.shapeControl.rotate(model, group, radian)
-                          // 更新锚点
-                          utils.anchor.rotate(model, group, radian)
-                        })
+                        let model = node.getModel()
+                        let radian = model.radian
+                        let keyShape = node.getKeyShape()
+                        keyShape.resetMatrix()
+                        keyShape.rotate(radian)
+                        let group = _t.editor.get('group')
+                        // 更新shapeControl
+                        utils.shapeControl.rotate(model, group, radian)
+                        // 更新锚点
+                        utils.anchor.rotate(model, group, radian)
+                      })
                       // 加载数据后保存记录
                       // 更新操作日志
                       _t.$store.commit('editor/log/update', {
@@ -851,14 +862,14 @@
           _t.editor.emit('editor:record', 'handleToolTrigger')
         }
       },
-      initInfo (data = {}) {
+      initInfo(data = {}) {
         let _t = this
         _t.editorInfo = {
           ..._t.defInfo,
           ...data
         }
       },
-      bindShortcuts () {
+      bindShortcuts() {
         let _t = this
         _t.toolList.forEach(item => {
           if (item.enable && item.shortcuts) {
@@ -882,18 +893,18 @@
           _t.$X.utils.bus.$emit('editor/contextmenu/close')
         })
       },
-      bindUnload () {
+      bindUnload() {
         window.onbeforeunload = function (event) {
           event.returnValue = false
           return false
         }
       },
-      handleEditorClick () {
+      handleEditorClick() {
         let _t = this
         _t.$X.utils.bus.$emit('editor/contextmenu/close')
       }
     },
-    created () {
+    created() {
       let _t = this
       // 处理操作类型，初始化编辑器
       _t.initInfo()
