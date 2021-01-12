@@ -73,13 +73,16 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     data () {
       return {
         form: {
           tagName: '',
           modelName: ''
-        }
+        },
+        firstItem: null
       }
     },
     name: 'Details',
@@ -91,10 +94,44 @@
     },
     methods: {
       onSubmit () {
-        this.$X.utils.bus.$emit('submit', { form: this.form, paramList: this.paramList })
+        console.log(this.editor)
+        console.log(this.currentItem)
+        // this.$X.utils.bus.$emit('submit', { form: this.form, paramList: this.paramList })
+        let _t = this
+        if (_t.currentItem.length) {
+          const model = _t.currentItem[0]
+          const params = { form: this.form, paramList: this.paramList }
+          if (!model.params || JSON.stringify(model.params) !== JSON.stringify(params)) {
+            _t.currentItem[0].model.params = {}
+            _t.currentItem[0].model.params = params
+          }
+        }
+        // 广播事件
+        _t.$X.utils.bus.$emit('editor/currentItem/update', _t.currentItem)
+      }
+    },
+    watch: {
+      currentItem: {
+        handler (val) {
+          let _t = this
+          // 取第一个节点
+          _t.firstItem = val[0]
+          if (_t.firstItem) {
+            const params = JSON.parse(JSON.stringify(_t.firstItem.model.params))
+            this.form = params.form
+            this.paramList = params.paramList
+          } else {
+            _t.formData = {}
+          }
+        },
+        deep: true
       }
     },
     computed: {
+      ...mapGetters([
+        'editor',
+        'currentItem'
+      ]),
       tagNameList () {
         return this.originData.map(item => {
           return {
@@ -132,10 +169,33 @@
           return {}
         }
       },
-      paramList () {
-        if (this.modelList && this.modelList.paramList) { return this.modelList.paramList }
-        return []
+      paramList: {
+        get: function () {
+          if (this.modelList && this.modelList.paramList) { return this.modelList.paramList }
+          return []
+        },
+        set: function (val) {
+          this.paramList = val
+        }
       }
     }
+    /* watch: {
+      currentItem: {
+        handler (val) {
+          let _t = this
+          // 取第一个节点
+          _t.firstItem = val[0]
+          if (_t.firstItem) {
+            const { form, paramList } = JSON.parse(JSON.stringify(_t.firstItem))
+            _t.form = form
+            // _t.paramList = paramList
+          } else {
+            _t.form = {}
+            // _t.paramList = []
+          }
+        },
+        deep: true
+      }
+    } */
   }
 </script>

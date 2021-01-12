@@ -63,7 +63,6 @@
     },
     data () {
       return {
-        currentNode: {},
         devices: {},
         originData: [],
         editorInfo: {},
@@ -299,9 +298,7 @@
       },
       _nodeClick (event) {
         // let _t = this
-        this.currentNode = event.item._cfg
         console.log('_nodeClick111', event.item)
-        console.log(this.currentNode)
         // _t.editor.setItemState(event.item, 'active', true)
       },
       _nodeMousedown (event) {
@@ -941,13 +938,6 @@
       _t.$X.utils.bus.$on('editor/tool/trigger', _t.handleToolTrigger)
       _t.$X.utils.bus.$on('editor/currentItem/update', function (data) {
         _t.editor.emit('editor:setItem', data)
-      })
-      // 监听提交事件
-      _t.$X.utils.bus.$on('submit', function (data) {
-        console.log(data, '===================')
-        console.log(this.currentNode)
-        Object.assign(this.currentNode, data)
-        console.log(this.currentNode)
       })
     }
   }
