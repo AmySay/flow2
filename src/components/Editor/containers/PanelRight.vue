@@ -12,7 +12,7 @@
       <Options></Options>
     </CardItem>
     <CardItem title="属性设置" :enableFold="true" :bold="true">
-      <Details :originData = 'originData'></Details>
+      <Details :originData='originData' :eventItem='eventItem'></Details>
     </CardItem>
     <CardItem :title="$t('L10102')" :enableFold="true" :bold="true">
       <Navigator></Navigator>
@@ -39,11 +39,19 @@
     props: {
       originData: {
         type: Array,
-        default: () => { return [] }
+        default: () => {
+          return []
+        }
+      },
+      eventItem: {
+        type: Object,
+        default: () => {
+          return {}
+        }
       }
     },
     methods: {
-      toggleHandler (data) {
+      toggleHandler(data) {
         let _t = this
         _t.$X.utils.bus.$emit('editor/panel/toggle', data)
       }

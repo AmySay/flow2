@@ -17,7 +17,10 @@
 
 <template>
   <div class="nodeDetails">
-    <el-button type="primary"  @click="onSubmit">提交</el-button>
+    <div>
+      <span>{{currentShape }}</span>
+      <el-button type="primary" @click="onSubmit" style='margin-left: 10px'>提交</el-button>
+    </div>
     <el-form :model="form" label-position='top' label-width="100px">
       <el-form-item label="tagName" prop="tagName" class='el-form-details'>
         <el-select
@@ -53,8 +56,8 @@
         <el-form-item :prop="item.name" class='el-form-details'>
             <span :label="item.name" :prop="item.name" class='el-form-item__label'>
               {{item.name}}
-              <el-tooltip  slot="label" v-show = 'item.description' effect="dark" :content="item.description"
-                           placement="top">
+              <el-tooltip slot="label" v-show='item.description' effect="dark" :content="item.description"
+                          placement="top">
               <i
                 class="el-icon-question el-input__icon"
               >
@@ -73,15 +76,16 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import {mapGetters} from 'vuex'
 
   export default {
-    data () {
+    data() {
       return {
         form: {
           tagName: '',
           modelName: ''
         },
+        paramList: [],
         firstItem: null
       }
     },
@@ -89,18 +93,30 @@
     props: {
       originData: {
         type: Array,
-        default: () => { return [] }
+        default: () => {
+          return []
+        }
+      },
+      eventItem: {
+        type: Object,
+        default: () => {
+          return {
+            _cfg: {
+              currentShape: ''
+            }
+          }
+        }
       }
     },
     methods: {
-      onSubmit () {
+      onSubmit() {
         console.log(this.editor)
         console.log(this.currentItem)
         // this.$X.utils.bus.$emit('submit', { form: this.form, paramList: this.paramList })
         let _t = this
         if (_t.currentItem.length) {
           const model = _t.currentItem[0]
-          const params = { form: this.form, paramList: this.paramList }
+          const params = {form: this.form, paramList: this.paramList}
           if (!model.params || JSON.stringify(model.params) !== JSON.stringify(params)) {
             _t.currentItem[0].model.params = {}
             _t.currentItem[0].model.params = params
@@ -112,16 +128,24 @@
     },
     watch: {
       currentItem: {
-        handler (val) {
+        handler(val) {
           let _t = this
           // 取第一个节点
           _t.firstItem = val[0]
-          if (_t.firstItem) {
+          if (_t.firstItem && _t.firstItem.model.params) {
             const params = JSON.parse(JSON.stringify(_t.firstItem.model.params))
             this.form = params.form
             this.paramList = params.paramList
           } else {
             _t.formData = {}
+          }
+        },
+        deep: true
+      },
+      modelList: {
+        handler(val) {
+          if (val && val.paramList) {
+            this.paramList = this.modelList.paramList
           }
         },
         deep: true
@@ -132,7 +156,7 @@
         'editor',
         'currentItem'
       ]),
-      tagNameList () {
+      tagNameList() {
         return this.originData.map(item => {
           return {
             label: item.tagName,
@@ -140,16 +164,16 @@
           }
         })
       },
-      tagModelList () {
+      tagModelList() {
         if (this.form.tagName && this.originData.length) {
           return this.originData.filter(item =>
             item.tagName === this.form.tagName
-          )[ 0 ] || {}
+          )[0] || {}
         } else {
           return {}
         }
       },
-      modelNameList () {
+      modelNameList() {
         if (this.tagModelList && this.tagModelList.tagModel) {
           return this.tagModelList.tagModel.map(item => {
             return {
@@ -160,42 +184,22 @@
         }
         return []
       },
-      modelList () {
+      modelList() {
         if (this.form.modelName && this.tagModelList.tagModel && this.tagModelList.tagModel.length) {
           return this.tagModelList.tagModel.filter(item =>
             item.modelName === this.form.modelName
-          )[ 0 ] || {}
+          )[0] || {}
         } else {
           return {}
         }
       },
-      paramList: {
-        get: function () {
-          if (this.modelList && this.modelList.paramList) { return this.modelList.paramList }
-          return []
-        },
-        set: function (val) {
-          this.paramList = val
+      currentShape() {
+        if (this.eventItem._cfg && this.eventItem._cfg.currentShape) {
+          return this.eventItem._cfg.currentShape
+        } else {
+          return '--'
         }
       }
     }
-    /* watch: {
-      currentItem: {
-        handler (val) {
-          let _t = this
-          // 取第一个节点
-          _t.firstItem = val[0]
-          if (_t.firstItem) {
-            const { form, paramList } = JSON.parse(JSON.stringify(_t.firstItem))
-            _t.form = form
-            // _t.paramList = paramList
-          } else {
-            _t.form = {}
-            // _t.paramList = []
-          }
-        },
-        deep: true
-      }
-    } */
   }
 </script>
