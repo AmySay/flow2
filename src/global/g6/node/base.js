@@ -19,18 +19,18 @@ export default {
     return shape
   },
   drawIcon (cfg, group) {
-    let style = this.getShapeStyle(cfg)
+    // let style = this.getShapeStyle(cfg)
     if (this.options.icon) {
       let attrs = {
-        x: style.x + this.options.iconStyle.left,
-        y: style.y + this.options.iconStyle.top,
+        x: this.options.iconStyle.left,
+        y: this.options.iconStyle.top,
         width: this.options.iconStyle.width,
         height: this.options.iconStyle.height
       }
       if (this.shapeType === 'circle') {
         attrs = {
-          x: style.x - style.r + this.options.iconStyle.left,
-          y: style.y - style.r + this.options.iconStyle.top,
+          x: this.options.iconStyle.left,
+          y: this.options.iconStyle.top,
           width: this.options.iconStyle.width,
           height: this.options.iconStyle.height
         }
@@ -87,13 +87,8 @@ export default {
       }
     }
     // console.log('points', points)
-    return [
-      [0.5, 0], // top
-      [1, 0.5], // right
-      [0.5, 1], // bottom
-      [0, 0.5] // left
-    ]*/
-    // return points
+
+    return points*/
   },
   setState (name, value, item) {
     // 设置锚点状态

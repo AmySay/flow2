@@ -11,8 +11,8 @@
     <CardItem :title="$t('L10101')" :enableFold="true" :bold="true">
       <Options></Options>
     </CardItem>
-    <CardItem :title="$t('L10102')" :enableFold="true" :bold="true">
-      <Details></Details>
+    <CardItem title="属性设置" :enableFold="true" :bold="true">
+      <Details :originData = 'originData'></Details>
     </CardItem>
     <CardItem :title="$t('L10102')" :enableFold="true" :bold="true">
       <Navigator></Navigator>
@@ -35,6 +35,12 @@
       Options,
       Navigator,
       Details
+    },
+    props: {
+      originData: {
+        type: Array,
+        default: () => { return [] }
+      }
     },
     methods: {
       toggleHandler (data) {

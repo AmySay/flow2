@@ -10,17 +10,18 @@ import registerEdge from './edge/index'
 import registerNode from './node/index'
 
 import config from './config/index'
-import Cookies from 'js-cookie'
-
 
 // 挂载config
 G6.$C = config
-
+let res = {
+  data: JSON.parse(localStorage.getItem('devices'))
+}
+G6.devices = res.data
 // 注册自定义交互
 registerBehavior(G6)
 // 注册自定义边
 registerEdge(G6)
 // 注册自定义节点
-registerNode(G6,G6.devices)
+registerNode(G6, G6.devices)
 
 export default G6

@@ -244,12 +244,14 @@ export default {
       start (event) {
         let _t = this
         let sourceAnchor
+        debugger
         let startModel = _t.info.node.getModel()
         // 锚点数据
         let anchorPoints = _t.info.node.getAnchorPoints()
         // 处理线条目标点
         if (anchorPoints && anchorPoints.length) {
           // 获取距离指定坐标最近的一个锚点
+          console.log(event)
           sourceAnchor = _t.info.node.getLinkPoint({ x: event.x, y: event.y })
         }
         _t.drawLine.currentLine = _t.graph.addItem('edge', {
