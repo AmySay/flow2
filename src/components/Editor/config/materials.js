@@ -86,7 +86,7 @@ export default [
         anchorPoints: anchorPoints,
         shapeControl: shapeControl,
         icon: `<g><g></g><g><g transform="translate(0.5,0.5)" style="visibility: visible;"><rect x="1.44" y="7.68" width="28.8" height="14.4" rx="2.16" ry="2.16" fill="#ffffff" stroke="#000000" stroke-width="1.3" pointer-events="all"></rect></g></g><g></g><g></g></g>`
-      },
+      }
     ]
   },
   {

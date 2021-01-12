@@ -51,7 +51,7 @@
       }
     },
     methods: {
-      toggleHandler(data) {
+      toggleHandler (data) {
         let _t = this
         _t.$X.utils.bus.$emit('editor/panel/toggle', data)
       }

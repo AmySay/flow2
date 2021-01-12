@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {Message} from 'element-ui'
+import { Message } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
@@ -25,7 +25,7 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
-    if (res.ret !== "SUCCESS") {
+    if (res.ret !== 'SUCCESS') {
       Message({
         message: res.message || '请求接口失败！',
         type: 'error',

@@ -61,7 +61,7 @@ export default {
       [0.5, 1], // bottom
       [0, 0.5] // left
     ]
-    /*const { anchorPoints, width, height } = cfg
+    /* const { anchorPoints, width, height } = cfg
     const shape = this.shape
     let points = []
     if (anchorPoints && anchorPoints.length) {
@@ -88,7 +88,7 @@ export default {
     }
     // console.log('points', points)
 
-    return points*/
+    return points */
   },
   setState (name, value, item) {
     // 设置锚点状态

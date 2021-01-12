@@ -52,7 +52,7 @@
         </el-select>
       </el-form-item>
 
-      <div v-for='item in paramList'>
+      <div v-for='item in paramList' :key='key'>
         <el-form-item :prop="item.name" class='el-form-details'>
             <span :label="item.name" :prop="item.name" class='el-form-item__label'>
               {{item.name}}
