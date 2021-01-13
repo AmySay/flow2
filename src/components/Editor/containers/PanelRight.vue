@@ -14,9 +14,6 @@
     <CardItem title="属性设置" :enableFold="true" :bold="true">
       <Details :originData='originData' :eventItem='eventItem'></Details>
     </CardItem>
-    <CardItem :title="$t('L10102')" :enableFold="true" :bold="true">
-      <Navigator></Navigator>
-    </CardItem>
   </CardBox>
 </template>
 

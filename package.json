@@ -1,5 +1,5 @@
 {
-  "name": "x-flowchart-vue",
+  "name": "vue",
   "version": "3.0.0",
   "description": "A visual graph editor based on G6 and Vue.",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OXOYO/X-Flowchart-Vue.git"
+    "url": ""
   },
   "keywords": [
     "flowchart",
@@ -21,9 +21,9 @@
   "author": "OXOYO",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/OXOYO/X-Flowchart-Vue/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/OXOYO/X-Flowchart-Vue#readme",
+  "homepage": "",
   "dependencies": {
     "@antv/g6": "3.1.3",
     "core-js": "^2.6.5",

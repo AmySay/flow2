@@ -110,23 +110,11 @@
         let el = _t.$el
         // 画板
         let sketchpad = el.querySelector('#sketchpad')
-        // 导航器
-        let navigator = el.querySelector('#navigator')
-        let size = [
-          navigator.clientWidth,
-          parseInt(navigator.clientWidth * sketchpad.clientHeight / sketchpad.clientWidth)
-        ]
-        const minimap = new Minimap({
-          container: navigator,
-          type: 'keyShape',
-          size: size
-        })
         const grid = new XGrid()
         const background = new XBackground()
         // 生成编辑器实例
         _t.editor = new G6.Graph({
           plugins: [
-            minimap,
             grid,
             background
           ],

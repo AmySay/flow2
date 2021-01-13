@@ -148,7 +148,7 @@
 }
 
 .xfv-icon-github:before {
-  content: "\e64a";
+  content: "";
 }
 
 .xfv-icon-marquee:before {
