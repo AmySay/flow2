@@ -8,6 +8,7 @@ import utils from '../utils'
 export default {
   shape: null,
   drawShape (cfg, group) {
+    console.log(cfg,'drawShape')
     const shapeType = this.shapeType
     const style = this.getShapeStyle(cfg)
     const shape = group.addShape(shapeType, {
@@ -19,7 +20,7 @@ export default {
     return shape
   },
   drawIcon (cfg, group) {
-    // let style = this.getShapeStyle(cfg)
+    let style = this.getShapeStyle(cfg)
     if (this.options.icon) {
       let attrs = {
         x: this.options.iconStyle.left,
@@ -50,10 +51,18 @@ export default {
         draggable: true,
         name: 'image-shape',
       })
-      if (cfg.hideIcon) {
-        group.icon.hide()
-      }
     }
+  },
+  update(cfg, group){
+    console.log(cfg,'updateShape')
+    console.log(group,'updateShape')
+    let edges = cfg.getNodes()
+    console.log('___________',edges,)
+    let { id } = group.getModel()
+    console.log('___________',id,)
+    let anchorPoints = group.getAnchorPoints()
+    console.log('___________',anchorPoints)
+
   },
   getAnchorPoints (cfg) {
     return [

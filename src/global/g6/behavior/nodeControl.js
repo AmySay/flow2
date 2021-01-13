@@ -65,6 +65,7 @@ export default {
       }
     },
     startAddNode (node) {
+      console.log('startAddNode',node)
       let _t = this
       // 初始化数据
       _t.info = {
@@ -653,6 +654,7 @@ export default {
       move (event) {
         let _t = this
         if (_t.dragNode.status === 'dragNodeToEditor') {
+          debugger
           if (_t.dragNode.dottedNode && _t.info.node) {
             let { width, height } = _t.info.node
             _t.dragNode.dottedNode.attr({

@@ -13,7 +13,7 @@ export default {
   extendName: 'base-node',
   options: {
     ...base,
-    shapeType: 'image',
+    shapeType: 'path',
     labelPosition: 'bottom',
     getShapeStyle (cfg) {
       const size = this.getSize(cfg)

@@ -236,6 +236,7 @@
           _t.$store.commit('editor/currentItem/update', data)
         })
         _t.editor.on('editor:setItem', function (data) {
+          console.log(data,'editor:setItem')
           data.forEach((item, index) => {
             let node = _t.editor.findById(item.id)
             if (!index) {
