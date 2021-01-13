@@ -47,7 +47,8 @@ export default {
           img: this.options.icon,
           ...attrs
         },
-        draggable: true
+        draggable: true,
+        name: 'image-shape',
       })
       if (cfg.hideIcon) {
         group.icon.hide()

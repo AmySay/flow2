@@ -8,6 +8,7 @@ import general from './general'
 import arrow from './arrow'
 import base from './base'
 import Util from '@antv/g6/src/util/index'
+import Global from '@antv/g6/src/global'
 import _ from 'lodash'
 
 const obj = {
@@ -53,18 +54,35 @@ export default function (G6, devices) {
           ...base,
           shapeType: 'image',
           getShapeStyle (cfg) {
-            const style = {
-              x: 0,
-              y: 0,
-              width: width,
-              height: height,
-              fill: '#f9f9f9',
-              stroke: '#bbb',
-              cursor: 'default'
-            }
-            if (cfg.hasOwnProperty('color')) {
-              style.fill = cfg.color
-            }
+            const size = this.getSize(cfg)
+            console.log(size, 'rectangleTestsize')
+            const width = size[0]
+            const height = size[1]
+            const x = 0 - width / 2
+            const y = 0 - height / 2
+            const path = [
+              // 左顶点
+              [ 'M', -width / 2, 0 ],
+              // 左上顶点
+              [ 'L', -width / 2, -height / 2 ],
+              // 右上顶点
+              [ 'L', width / 2, -height / 2 ],
+              // 右下顶点
+              [ 'L', width / 2, height / 2 ],
+              // 左下顶点
+              [ 'L', -width / 2, height / 2 ],
+              [ 'Z' ]
+            ]
+            const color = cfg.color || Global.defaultNode.color
+            const style = Util.mix({}, Global.defaultNode.style, {
+              // 节点的位置在上层确定，所以这里仅使用相对位置即可
+              x,
+              y,
+              width,
+              height,
+              path,
+              stroke: color
+            }, cfg.style)
             return style
           },
           options: Util.mix({}, {
@@ -74,8 +92,6 @@ export default function (G6, devices) {
               height: height / 2,
               left: -width / 4,
               top: -height / 4
-              // left: -width / 4,
-              // top: -height / 4
             },
             style: {
               fill: '#f9f9f9',
