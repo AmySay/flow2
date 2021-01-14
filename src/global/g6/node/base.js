@@ -14,7 +14,7 @@ export default {
     const shape = group.addShape(shapeType, {
       attrs: style
     })
-    debugger
+
     this.shape = shape
     this.drawIcon(cfg, group)
     return shape
@@ -56,12 +56,12 @@ export default {
   update(cfg, group){
     console.log(cfg,'updateShape')
     console.log(group,'updateShape')
-    let edges = cfg.getNodes()
-    console.log('___________',edges,)
-    let { id } = group.getModel()
-    console.log('___________',id,)
-    let anchorPoints = group.getAnchorPoints()
-    console.log('___________',anchorPoints)
+    // let edges = cfg.getNodes()
+    // console.log('___________',edges,)
+    // let { id } = group.getModel()
+    // console.log('___________',id,)
+    // let anchorPoints = group.getAnchorPoints()
+    // console.log('___________',anchorPoints)
 
   },
   getAnchorPoints (cfg) {

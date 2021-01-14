@@ -245,7 +245,7 @@ export default {
       start (event) {
         let _t = this
         let sourceAnchor
-        debugger
+
         let startModel = _t.info.node.getModel()
         // 锚点数据
         let anchorPoints = _t.info.node.getAnchorPoints()
@@ -654,7 +654,7 @@ export default {
       move (event) {
         let _t = this
         if (_t.dragNode.status === 'dragNodeToEditor') {
-          debugger
+
           if (_t.dragNode.dottedNode && _t.info.node) {
             let { width, height } = _t.info.node
             _t.dragNode.dottedNode.attr({
