@@ -52,7 +52,7 @@
         </el-select>
       </el-form-item>
 
-      <div v-for='item in paramList' :key='key'>
+      <div v-for='(item,key) in paramList' :key='key'>
         <el-form-item :prop="item.name" class='el-form-details'>
             <span :label="item.name" :prop="item.name" class='el-form-item__label'>
               {{item.name}}
@@ -91,10 +91,10 @@
     },
     name: 'Details',
     props: {
-      originData: {
-        type: Array,
+      originDataObj: {
+        type: Object,
         default: () => {
-          return []
+          return {}
         }
       },
       eventItem: {
@@ -116,7 +116,7 @@
         let _t = this
         if (_t.currentItem.length) {
           const model = _t.currentItem[0]
-          const params = {form: this.form, paramList: this.paramList}
+          const params = {form: this.form, paramList: this.paramList, originId: this.originDataObj.originId || ''}
           if (!model.params || JSON.stringify(model.params) !== JSON.stringify(params)) {
             _t.currentItem[0].model.params = {}
             _t.currentItem[0].model.params = params
@@ -137,7 +137,8 @@
             this.form = params.form
             this.paramList = params.paramList
           } else {
-            _t.formData = {}
+            _t.form = {}
+            _t.paramList = []
           }
         },
         deep: true
@@ -156,6 +157,9 @@
         'editor',
         'currentItem'
       ]),
+      originData() {
+        return this.originDataObj.originData || []
+      },
       tagNameList() {
         return this.originData.map(item => {
           return {
