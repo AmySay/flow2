@@ -288,8 +288,8 @@
       },
       _nodeClick(event) {
         let _t = this
-        const id = event.item._cfg.model.params && event.item._cfg.model.params.originId || ''
-        console.log('_nodeClick111', id)
+        const id = event.item._cfg.model && event.item._cfg.model.originId
+        console.log('_nodeClick111', event.item)
         this.eventItem = event.item
         if (id) this.getOriginData(id)
         _t.editor.setItemState(event.item, 'active', true)
@@ -369,10 +369,13 @@
       },
       doAddNode(info) {
         let _t = this
+        console.log(info, 'doAddNode-------------------')
         let node = {
           id: G6.Util.uniqueId(),
           shape: info.shape,
           label: info.defaultLabel,
+          originId: info.originId,
+          data: info.data,
           labelCfg: {
             position: 'center',
             style: {
@@ -392,12 +395,13 @@
         // 广播事件，通过自定义交互 node-control 添加节点
         _t.editor.emit('editor:addNode', node)
       },
-      doEditorClick(info) {
+      doEditorClick: _.debounce(function (info) {
         // 左边和右边联动
+        const _t = this
         console.log('doEditorClick', info)
         const id = JSON.parse(info.data).id
-        this.getOriginData(id)
-      },
+        _t.getOriginData(id)
+      }),
       getOriginData(id) {
         const originDataObj = JSON.parse(localStorage.getItem('originDataObj' + String(id)))
         console.log(originDataObj, 'originDataObj')

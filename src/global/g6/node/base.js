@@ -9,6 +9,7 @@ export default {
   shape: null,
   drawShape (cfg, group) {
     console.log(cfg,'drawShape')
+    console.log(group,'drawShape')
     const shapeType = this.shapeType
     const style = this.getShapeStyle(cfg)
     const shape = group.addShape(shapeType, {
