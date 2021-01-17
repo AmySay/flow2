@@ -7,6 +7,9 @@
 import G6 from '@antv/g6'
 import config from '../config'
 import utils from '../utils'
+import {Message} from 'element-ui'
+
+console.log(Message)
 
 export default {
   name: 'node-control',
@@ -321,6 +324,16 @@ export default {
             let endNode = event.item
             let startModel = _t.info.node.getModel()
             let endModel = endNode.getModel()
+            // type 一样不能连线
+            if (endModel && startModel) {
+              const endData = JSON.parse(endModel.data)
+              const startData = JSON.parse(startModel.data)
+              if (startData.type === endData.type) {
+                Message.error(startData.type + '类型相同不能连线！')
+                _t.graph.removeItem(_t.drawLine.currentLine)
+                return
+              }
+            }
             let targetAnchor
             // 锚点数据
             let anchorPoints = endNode.getAnchorPoints()
@@ -457,13 +470,10 @@ export default {
             width: attrs.size[0],
             height: attrs.size[1]
           }, group)
-          // 更新节点
-          console.log(attrs, '+++++++++++++++++++++++++++++++++++shapeControlPointmoveing---')
-          console.log(_t.info, '+++++++++++++++++++++++++++++++++++shapeControlPointmoveing2---')
-
           _t.graph.updateItem(_t.info.node, attrs)
-          debugger
-          // _t[_t.info.type].createNode.call(_t, event)
+          // 更新节点
+          console.log('+++++++++++++++++++++++++++++++++++shapeControlPointmoveing---')
+          console.log('+++++++++++++++++++++++++++++++++++shapeControlPointmoveing2---')
           if (_t.config.shapeControlPoint.updateEdge) {
             // 更新边
             utils.edge.update(_t.info.node, _t.graph)
@@ -695,7 +705,6 @@ export default {
                   y: y + event.event.movementY
                 }
                 // 更新节点
-                console.log(_t.info.node, attrs, '++++++++++++dragNode++++++++++++++++=')
                 _t.graph.updateItem(_t.info.node, attrs)
                 if (_t.config.dragNode.updateEdge) {
                   // 更新边
@@ -709,8 +718,6 @@ export default {
                   }, `X: ${event.x.toFixed(2)} Y: ${event.y.toFixed(2)}<br>W: ${width.toFixed(2)} H: ${height.toFixed(2)}`)
                 }
               } else {
-                console.log(_t.info.node, attrs, '++++++++++++ else++++++++++++++++=')
-
                 if (groupId && model.groupId && model.groupId === groupId) {
                   // 更新同组节点
                   _t.graph.updateItem(node, {

@@ -67,8 +67,10 @@ export default {
   },
   update(cfg, group) {
     this.ShowObjProperty1(cfg, 'cfgupdate+++++++++++++++++++++')
-    console.log(cfg,'---------cfg-----------')
+    console.log(cfg, '---------cfg-update----------')
+    console.log(group, '---------cfg---update--------')
     this.ShowObjProperty1(group, 'groupupdate___________________')
+    // group.update(cfg)
   },
   getAnchorPoints(cfg) {
     return [
