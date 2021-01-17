@@ -7,9 +7,9 @@ import utils from '../utils'
 
 export default {
   shape: null,
-  drawShape (cfg, group) {
-    console.log(cfg,'drawShape')
-    console.log(group,'drawShape')
+  drawShape(cfg, group) {
+    console.log(cfg, 'drawShape')
+    console.log(group, 'drawShape')
     const shapeType = this.shapeType
     const style = this.getShapeStyle(cfg)
     const shape = group.addShape(shapeType, {
@@ -20,7 +20,7 @@ export default {
     this.drawIcon(cfg, group)
     return shape
   },
-  drawIcon (cfg, group) {
+  drawIcon(cfg, group) {
     let style = this.getShapeStyle(cfg)
     if (this.options.icon) {
       let attrs = {
@@ -54,18 +54,23 @@ export default {
       })
     }
   },
-  update(cfg, group){
-    console.log(cfg,'updateShape')
-    console.log(group,'updateShape')
-    // let edges = cfg.getNodes()
-    // console.log('___________',edges,)
-    // let { id } = group.getModel()
-    // console.log('___________',id,)
-    // let anchorPoints = group.getAnchorPoints()
-    // console.log('___________',anchorPoints)
-
+  ShowObjProperty1(Obj) {
+    var attributes = '';
+    var methods = '';
+    for (const attr in Obj) {
+      if (Obj.attr != null)
+        attributes = attributes + attr + ' 属性： ' + Obj.i + '\r\n';
+      else
+        methods = methods + '方法: ' + attr + '\r\n';
+    }
+    console.log(attributes, methods)
   },
-  getAnchorPoints (cfg) {
+  update(cfg, group) {
+    this.ShowObjProperty1(cfg, 'cfgupdate+++++++++++++++++++++')
+    console.log(cfg,'---------cfg-----------')
+    this.ShowObjProperty1(group, 'groupupdate___________________')
+  },
+  getAnchorPoints(cfg) {
     return [
       [0.5, 0], // top
       [1, 0.5], // right
@@ -101,14 +106,14 @@ export default {
 
     return points */
   },
-  setState (name, value, item) {
+  setState(name, value, item) {
     // 设置锚点状态
     utils.anchor.setState(name, value, item)
     // 设置shapeControl状态
     utils.shapeControl.setState(name, value, item)
   },
   // 绘制后附加锚点
-  afterDraw (cfg, group) {
+  afterDraw(cfg, group) {
     // 绘制锚点
     utils.anchor.draw(cfg, group)
     // 绘制shapeControl

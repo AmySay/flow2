@@ -5,11 +5,12 @@
  */
 
 export default function (node, graph) {
+  console.log('更新边')
   let edges = graph.getEdges()
   if (!edges || !edges.length) {
     return
   }
-  let { id } = node.getModel()
+  let {id} = node.getModel()
   // 锚点数据
   let anchorPoints = node.getAnchorPoints()
   // 遍历边

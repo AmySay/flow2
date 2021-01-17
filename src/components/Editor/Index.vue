@@ -398,7 +398,6 @@
       doEditorClick: _.debounce(function (info) {
         // 左边和右边联动
         const _t = this
-        console.log('doEditorClick', info)
         const id = JSON.parse(info.data).id
         _t.getOriginData(id)
       }),
