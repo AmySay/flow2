@@ -9,7 +9,6 @@ import config from '../config'
 import utils from '../utils'
 import {Message} from 'element-ui'
 
-console.log(Message)
 
 export default {
   name: 'node-control',
@@ -316,24 +315,25 @@ export default {
       },
       stop(event) {
         let _t = this
+        debugger
+        let endNode = event.item
+        let startModel = _t.info.node.getModel()
+        let endModel = endNode.getModel()
+        // type 一样不能连线
+        if (endModel && startModel) {
+          const endData = JSON.parse(endModel.data)
+          const startData = JSON.parse(startModel.data)
+          if (startData.type === endData.type) {
+            Message.error(startData.type + '类型相同不能连线！')
+            _t.graph.removeItem(_t.drawLine.currentLine)
+            return
+          }
+        }
         if (_t.drawLine.isMoving) {
           if (_t.drawLine.currentLine === event.item) {
             // 画线过程中点击则移除当前画线
             _t.graph.removeItem(event.item)
           } else {
-            let endNode = event.item
-            let startModel = _t.info.node.getModel()
-            let endModel = endNode.getModel()
-            // type 一样不能连线
-            if (endModel && startModel) {
-              const endData = JSON.parse(endModel.data)
-              const startData = JSON.parse(startModel.data)
-              if (startData.type === endData.type) {
-                Message.error(startData.type + '类型相同不能连线！')
-                _t.graph.removeItem(_t.drawLine.currentLine)
-                return
-              }
-            }
             let targetAnchor
             // 锚点数据
             let anchorPoints = endNode.getAnchorPoints()
