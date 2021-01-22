@@ -31,7 +31,6 @@ export default function (G6, devices) {
           shapeType: 'image',
           getShapeStyle(cfg) {
             const size = this.getSize(cfg)
-            console.log(size, 'rectangleTestsize22')
             width = size[0]
             height = size[1]
             const x = 0 - width / 2

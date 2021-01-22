@@ -7,42 +7,29 @@ import utils from '../utils'
 
 export default {
   shape: null,
+  group: null,
   drawShape(cfg, group) {
-    console.log(cfg, 'drawShape')
-    console.log(group, 'drawShape')
     const shapeType = this.shapeType
     const style = this.getShapeStyle(cfg)
     const shape = group.addShape(shapeType, {
       attrs: style
     })
-
     this.shape = shape
+    this.group = group
     this.drawIcon(cfg, group)
     return shape
   },
   drawIcon(cfg, group) {
-    let style = this.getShapeStyle(cfg)
+    let width,height;
+    const size = this.getSize(cfg)
+    width = size[0]
+    height = size[1]
     if (this.options.icon) {
       let attrs = {
         x: this.options.iconStyle.left,
         y: this.options.iconStyle.top,
-        width: this.options.iconStyle.width,
-        height: this.options.iconStyle.height
-      }
-      if (this.shapeType === 'circle') {
-        attrs = {
-          x: this.options.iconStyle.left,
-          y: this.options.iconStyle.top,
-          width: this.options.iconStyle.width,
-          height: this.options.iconStyle.height
-        }
-      } else if (this.shapeType === 'path') {
-        attrs = {
-          x: this.options.iconStyle.left,
-          y: this.options.iconStyle.top,
-          width: this.options.iconStyle.width,
-          height: this.options.iconStyle.height
-        }
+        width,
+        height
       }
       group.icon = group.addShape('image', {
         attrs: {
@@ -70,7 +57,8 @@ export default {
     console.log(cfg, '---------cfg-update----------')
     console.log(group, '---------cfg---update--------')
     this.ShowObjProperty1(group, 'groupupdate___________________')
-    // group.update(cfg)
+    this.group.removeChild(group)
+    this.drawIcon(cfg, this.group)
   },
   getAnchorPoints(cfg) {
     return [
