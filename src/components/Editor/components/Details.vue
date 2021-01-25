@@ -12,6 +12,9 @@
     padding-top: 10px;
     height: 100%;
     overflow: hidden;
+    .el-form-item{
+      margin-bottom: 5px;
+    }
   }
 </style>
 

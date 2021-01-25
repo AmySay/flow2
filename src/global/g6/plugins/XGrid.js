@@ -15,8 +15,8 @@ export default class XGrid extends Grid {
     const matrix = e.matrix
     // 矩阵变换
     const transform = 'matrix(' + matrix[0] + ',' + matrix[1] + ',' + matrix[3] + ',' + matrix[4] + ',' + matrix[6] + ',' + matrix[7] + ')'
-    modifyCSS(gridContainer, {
-      transform
-    })
+    // modifyCSS(gridContainer, {
+    //   transform
+    // })
   }
 }

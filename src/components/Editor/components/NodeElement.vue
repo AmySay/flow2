@@ -6,7 +6,8 @@
 
 <style scoped lang="less" rel="stylesheet/less">
   .node-element {
-    display: inline-block;
+    /*display: inline-block;*/
+    text-align: center;
     margin: 2px;
     border: 1px solid transparent;
 
@@ -22,7 +23,8 @@
       .icon {
         left: 1px;
         top: 1px;
-        width: 32px;
+        text-align: center;
+        width: 100%;
         height: 30px;
         display: block;
         position: relative;
@@ -40,7 +42,8 @@
     @click = 'handleChick'
   >
     <div class="content" :title="title">
-      <img class="icon" :src="info.icon"/>
+      <img class="icon" :src="info.icon" />
+      <div>{{info.label}}</div>
     </div>
   </div>
 </template>
@@ -74,7 +77,7 @@
       },
       height: {
         type: Number,
-        default: 40
+        default: 60
       }
     },
     computed: {
@@ -82,7 +85,7 @@
         let _t = this
         let style = {}
         if (_t.width) {
-          style.width = _t.width + 'px'
+          // style.width = _t.width + 'px'
         }
         if (_t.height) {
           style.height = _t.height + 'px'

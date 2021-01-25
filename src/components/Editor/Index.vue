@@ -456,9 +456,9 @@
                       _t.editor.read(data.content)
                       _t.editor.paint()
                       // 缩放到实际大小
-                      _t.doZoom({
-                        name: 'actualSize'
-                      })
+                      // _t.doZoom({
+                      //   name: 'actualSize'
+                      // })
                     }
                   } else {
                     let data = _t.log.list[_t.log.current]
@@ -466,9 +466,9 @@
                     _t.editor.read(data.content)
                     _t.editor.paint()
                     // 缩放到实际大小
-                    _t.doZoom({
-                      name: 'actualSize'
-                    })
+                    // _t.doZoom({
+                    //   name: 'actualSize'
+                    // })
                   }
                 }
               })

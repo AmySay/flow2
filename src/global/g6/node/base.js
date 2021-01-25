@@ -52,14 +52,14 @@ export default {
     }
     console.log(attributes, methods)
   },
-  update(cfg, group) {
-    this.ShowObjProperty1(cfg, 'cfgupdate+++++++++++++++++++++')
-    console.log(cfg, '---------cfg-update----------')
-    console.log(group, '---------cfg---update--------')
-    this.ShowObjProperty1(group, 'groupupdate___________________')
-    this.group.removeChild(group)
-    this.drawIcon(cfg, this.group)
-  },
+  // update(cfg, group) {
+  //   this.ShowObjProperty1(cfg, 'cfgupdate+++++++++++++++++++++')
+  //   console.log(cfg, '---------cfg-update----------')
+  //   console.log(group, '---------cfg---update--------')
+  //   this.ShowObjProperty1(group, 'groupupdate___________________')
+  //   this.group.removeChild(group)
+  //   this.drawIcon(cfg, this.group)
+  // },
   getAnchorPoints(cfg) {
     return [
       [0.5, 0], // top

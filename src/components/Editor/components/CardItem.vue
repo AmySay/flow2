@@ -47,6 +47,9 @@
       display: inline-block;
       width: 100%;
       border-bottom: 1px solid rgba(0, 0, 0, .1);
+      .ivu-form-item{
+        margin-bottom: 5px;
+      }
     }
   }
 </style>
