@@ -20,10 +20,11 @@ export default {
     return shape
   },
   drawIcon(cfg, group) {
-    let width,height;
+    let width, height;
     const size = this.getSize(cfg)
     width = size[0]
     height = size[1]
+    console.log(size, '----size')
     if (this.options.icon) {
       let attrs = {
         x: this.options.iconStyle.left,
@@ -52,16 +53,20 @@ export default {
     }
     console.log(attributes, methods)
   },
-  update(cfg, group) {
-    this.ShowObjProperty1(cfg, 'cfgupdate+++++++++++++++++++++')
-    console.log(cfg, '---------cfg-update----------')
-    console.log(group, '---------cfg---update--------')
-    this.ShowObjProperty1(group, 'groupupdate___________________')
-    // this.group.get()
-    // this.group.removeChild(group)
-    // this.group.clear()
-    // this.drawIcon(cfg, this.group)
-  },
+  // update(cfg, group) {
+  //   this.ShowObjProperty1(cfg, 'cfgupdate+++++++++++++++++++++')
+  //   console.log(cfg, '---------cfg-update----------')
+  //   console.log(group, '---------cfg---update--------')
+  //   this.ShowObjProperty1(group, 'groupupdate___________________')
+  //   const style = group.getKeyShapeStyle();
+  //   console.log(style)
+  //   // group.refresh()
+  //   // this.group.get()
+  //   // this.group.removeChild(group)
+  //   // this.group.clear()
+  //   // this.drawIcon(cfg, this.group)
+  // },
+  update: undefined,
   getAnchorPoints(cfg) {
     return [
       [0.5, 0], // top

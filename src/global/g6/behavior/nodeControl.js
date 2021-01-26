@@ -470,16 +470,49 @@ export default {
             width: attrs.size[0],
             height: attrs.size[1]
           }, group)
-          _t.graph.updateItem(_t.info.node, attrs)
+          // let {width, height, minWidth, minHeight, label} = _t.info.node
+          // let node = {
+          //   ..._t.info.node,
+          //   id: G6.Util.uniqueId(),
+          //   x: event.x,
+          //   y: event.y,
+          //   size: [width, height],
+          //   minWidth: minWidth,
+          //   minHeight: minHeight,
+          //   label: label,
+          //   style: {
+          //     fill: _t.graph.$X.fill,
+          //     fillOpacity: _t.graph.$X.fillOpacity,
+          //     stroke: _t.graph.$X.lineColor,
+          //     strokeOpacity: _t.graph.$X.strokeOpacity,
+          //     lineWidth: _t.graph.$X.lineWidth,
+          //     ...config.edge.type[_t.graph.$X.lineDash]
+          //   }
+          // }
+          // _t.graph.addItem('node', node)
           // 更新节点
-          console.log('+++++++++++++++++++++++++++++++++++shapeControlPointmoveing---')
-          console.log('+++++++++++++++++++++++++++++++++++shapeControlPointmoveing2---')
+
+          // _t.graph.updateItem(_t.info.node, attrs)
+          // _t.graph.refreshItem(_t.info.node)
+          console.log(_t.graph)
+          console.log(_t.info)
+          console.log(attrs, '----attrs--')
+          // let id = _t.info.node.get('id')
+          // let a = _t.graph.findById(id)
+          // id.attrs({
+          //   width: 100,
+          //   height: 100
+          // })
+          // _t.graph.updateItem(id, attrs)
+          utils.edge.ShowObjProperty1(_t.graph, '+++++++++++++++++++++++++++++++++++shapeControlPointmoveing---')
+          utils.edge.ShowObjProperty1(_t.info, '+++++++++++++++++++++++++++++++++++shapeControlPointmoveing2---')
           if (_t.config.shapeControlPoint.updateEdge) {
             // 更新边
             utils.edge.update(_t.info.node, _t.graph)
           }
         }
       },
+
       stop(event) {
         let _t = this
         if (_t.info.node && _t.info.attrs && _t.shapeControlPoint.originNodeModel && _t.shapeControlPoint.isMoving) {
@@ -499,9 +532,9 @@ export default {
             height: attrs.size[1]
           }, group)
           // 更新节点
-          _t.graph.updateItem(_t.info.node, attrs)
+          _t.graph.updateItem(_t.info.node.getModel(), attrs)
           // 强制刷新无用
-          _t.graph.refreshItem(_t.info.node)
+          _t.graph.refreshItem(_t.info.node.getModel())
           if (_t.config.shapeControlPoint.updateEdge) {
             // 更新边
             utils.edge.update(_t.info.node, _t.graph)

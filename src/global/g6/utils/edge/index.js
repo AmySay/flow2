@@ -13,5 +13,16 @@ export default {
   drawAnimate,
   destroyAnimate,
   setState,
-  update
+  update,
+  ShowObjProperty1(Obj, key) {
+    var attributes = '';
+    var methods = '';
+    for (const attr in Obj) {
+      if (Obj.attr != null)
+        attributes = attributes + attr + ' 属性： ' + Obj.i + '\r\n';
+      else
+        methods = methods + '方法: ' + attr + '\r\n';
+    }
+    console.log(attributes, methods, key)
+  },
 }
