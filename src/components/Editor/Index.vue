@@ -286,14 +286,14 @@
       _editorClick(event) {
         console.log('_editorClick', event)
       },
-      _nodeClick(event) {
+      _nodeClick:_.debounce(function(event) {
         let _t = this
         const id = event.item._cfg.model && event.item._cfg.model.originId
         console.log('_nodeClick111', event.item)
         this.eventItem = event.item
         if (id) this.getOriginData(id)
         _t.editor.setItemState(event.item, 'active', true)
-      },
+      }),
       _nodeMousedown(event) {
         let _t = this
         _t.doClearAllStates()
@@ -377,7 +377,7 @@
           originId: info.originId,
           data: info.data,
           labelCfg: {
-            position: 'center',
+            position: 'bottom',
             style: {
               fontSize: 16,
               stroke: '#000000'
@@ -400,7 +400,7 @@
         const _t = this
         const id = JSON.parse(info.data).id
         _t.getOriginData(id)
-      }),
+      },300),
       getOriginData(id) {
         const originDataObj = JSON.parse(localStorage.getItem('originDataObj' + String(id)))
         console.log(originDataObj, 'originDataObj')

@@ -271,7 +271,7 @@ export default {
           // FIXME label 需支持双击编辑
           label: '',
           labelCfg: {
-            position: 'center',
+            position: 'bottom',
             style: {
               fontSize: 16,
               stroke: '#000000'
