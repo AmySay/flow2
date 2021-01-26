@@ -270,7 +270,7 @@ export default {
           // FIXME label 需支持双击编辑
           label: '',
           labelCfg: {
-            position: 'center',
+            position: 'bottom',
             style: {
               fontSize: 16,
               stroke: '#000000'
@@ -882,7 +882,7 @@ export default {
             _t.graph.updateItem(node, {
               label: html.value,
               labelCfg: {
-                position: 'center',
+                position: 'bottom',
                 style: {
                   fontSize: 16,
                   stroke: '#000000'
