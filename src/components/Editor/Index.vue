@@ -221,6 +221,10 @@
         _t.editor.$C = G6.$C
         // 设置模式为编辑
         _t.doSetMode('edit')
+        // 设置默认中心
+        _t.doZoom({
+          name: 'actualSize'
+        })
         // 绑定事件
         _t.editor.on('canvas:mousedown', _t._canvasMousedown)
         // 绑定事件
@@ -365,8 +369,8 @@
           _t.editor.zoomTo(ratio, center)
         } else if (info.name === 'actualSize') {
           ratio = 1
-          _t.editor.zoomTo(ratio)
-          // _t.editor.zoomTo(ratio, center)
+          // _t.editor.zoomTo(ratio)
+          _t.editor.zoomTo(ratio, center)
         }
       },
       doAddNode(info) {
