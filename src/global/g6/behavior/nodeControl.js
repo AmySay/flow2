@@ -323,7 +323,7 @@ export default {
         if (endModel && startModel) {
           const endData = JSON.parse(endModel.data)
           const startData = JSON.parse(startModel.data)
-          if (startData.type === endData.type) {
+          if (startData.type === endData.type && startData.id !== endData.id) {
             Message.error(startData.type + '类型相同不能连线！')
             _t.graph.removeItem(_t.drawLine.currentLine)
             return
