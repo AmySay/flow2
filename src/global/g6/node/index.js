@@ -16,8 +16,6 @@ const obj = {
   ...arrow
 }
 export default function (G6, devices) {
-  console.log('----g6-------------------', devices)
-
   if (devices && devices.length) {
     devices = devices.map(device => {
       let height = $X.$X.iconStyle[device.name].height
@@ -75,7 +73,6 @@ export default function (G6, devices) {
   })
 
   Object.assign(obj, obj2)
-  console.log(obj2, '++++++++++++++=')
   Object.values(obj).map(item => {
     G6.registerNode(item.name, item.options, item.extendName)
   })

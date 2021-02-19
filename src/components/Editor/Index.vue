@@ -236,7 +236,6 @@
           _t.$store.commit('editor/currentItem/update', data)
         })
         _t.editor.on('editor:setItem', function (data) {
-          console.log(data, 'editor:setItem')
           data.forEach((item, index) => {
             let node = _t.editor.findById(item.id)
             if (!index) {
@@ -274,23 +273,19 @@
       },
       _canvasMousedown() {
         let _t = this
-        console.log('_canvasMousedown ')
         _t.doClearAllStates()
         // 更新currentItem
         _t.$store.commit('editor/currentItem/update', [])
       },
       _canvasMouseup() {
         // let _t = this
-        console.log('_canvasMouseup')
         // _t.editor.setMode('edit')
       },
       _editorClick(event) {
-        console.log('_editorClick', event)
       },
       _nodeClick: _.debounce(function (event) {
         let _t = this
         const id = event.item._cfg.model && event.item._cfg.model.originId
-        console.log('_nodeClick111', event.item)
         this.eventItem = event.item
         if (id) this.getOriginData(id)
         _t.editor.setItemState(event.item, 'active', true)
@@ -312,12 +307,10 @@
         _t.editor.setItemState(event.item, 'hover', false)
       },
       _nodeContextmenu(event) {
-        console.log('_nodeContextmenu', event)
       },
       _edgeMousedown(event) {
         let _t = this
         _t.doClearAllStates()
-        console.log('_edgeMousedown', event)
         if (event.item && !event.item.destroyed) {
           _t.editor.setItemState(event.item, 'active', !event.item.hasState('active'))
         }
@@ -371,7 +364,6 @@
       },
       doAddNode(info) {
         let _t = this
-        console.log(info, 'doAddNode-------------------')
         let node = {
           id: G6.Util.uniqueId(),
           shape: info.shape,
@@ -405,7 +397,6 @@
       }, 300),
       getOriginData(id) {
         const originDataObj = JSON.parse(localStorage.getItem('originDataObj' + String(id)))
-        console.log(originDataObj, 'originDataObj')
         if (originDataObj) {
           this.originDataObj = {...originDataObj}
         } else {
@@ -446,6 +437,7 @@
             })
             if (['undo', 'redo'].includes(info.name)) {
               _t.$nextTick(function () {
+                debugger
                 if (_t.log.list.length) {
                   if (_t.log.current === 0) {
                     let data = _t.log.list[0]
@@ -458,9 +450,9 @@
                       _t.editor.read(data.content)
                       _t.editor.paint()
                       // 缩放到实际大小
-                      _t.doZoom({
+                      /*_t.doZoom({
                         name: 'actualSize'
-                      })
+                      })*/
                     }
                   } else {
                     let data = _t.log.list[_t.log.current]
@@ -468,9 +460,9 @@
                     _t.editor.read(data.content)
                     _t.editor.paint()
                     // 缩放到实际大小
-                    _t.doZoom({
+                   /* _t.doZoom({
                       name: 'actualSize'
-                    })
+                    })*/
                   }
                 }
               })

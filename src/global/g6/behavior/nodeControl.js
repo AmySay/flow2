@@ -67,7 +67,6 @@ export default {
       }
     },
     startAddNode(node) {
-      // console.log('startAddNode', node)
       let _t = this
       // 初始化数据
       _t.info = {
@@ -254,7 +253,6 @@ export default {
         // 处理线条目标点
         if (anchorPoints && anchorPoints.length) {
           // 获取距离指定坐标最近的一个锚点
-          console.log(event)
           sourceAnchor = _t.info.node.getLinkPoint({x: event.x, y: event.y})
         }
         _t.drawLine.currentLine = _t.graph.addItem('edge', {
