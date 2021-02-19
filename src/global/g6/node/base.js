@@ -24,7 +24,6 @@ export default {
     const size = this.getSize(cfg)
     width = size[0]
     height = size[1]
-    console.log(size, '----size')
     if (this.options.icon) {
       let attrs = {
         x: this.options.iconStyle.left,
@@ -66,7 +65,15 @@ export default {
   //   // this.group.clear()
   //   // this.drawIcon(cfg, this.group)
   // },
-  update: undefined,
+  update(cfg, node) {
+    const group = node.getContainer(); // 获取容器
+    const style = {
+      width:cfg.size[0],
+      height:cfg.size[1],
+      size:cfg.size
+    };
+    group.icon.attr(style);
+  },
   getAnchorPoints(cfg) {
     return [
       [0.5, 0], // top
