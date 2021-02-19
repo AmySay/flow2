@@ -66,10 +66,13 @@ export default {
   //   // this.drawIcon(cfg, this.group)
   // },
   update(cfg, node) {
-    const group = node.getContainer(); // 获取容器
+    const [width,height] = cfg.size
+    const group = node.getContainer();
     const style = {
-      width:cfg.size[0],
-      height:cfg.size[1],
+      width,
+      height,
+      x:-width / 2,
+      y:-height / 2,
       size:cfg.size
     };
     group.icon.attr(style);
