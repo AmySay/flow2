@@ -1616,6 +1616,7 @@ export default new Vuex.Store({
           break
       }
       debugger
+      console.log(log)
       state.editor.log = log
     }
   },

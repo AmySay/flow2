@@ -121,6 +121,7 @@
           container: sketchpad,
           width: sketchpad.clientWidth,
           height: sketchpad.clientHeight,
+          enableStack:true,
           fitView: true,
           fitViewPadding: 20,
           // 模式
@@ -247,6 +248,12 @@
                 style: data[0].model.style
               })
             }
+            // const group = node.getContainer();
+            // let group = _t.editor.get('group')
+            // 绘制锚点
+            // utils.anchor.update(group, item.model)
+            // 绘制shapeControl
+            // utils.shapeControl.update(group, item.model)
           })
           _t.editor.paint()
         })
@@ -450,9 +457,9 @@
                       _t.editor.read(data.content)
                       _t.editor.paint()
                       // 缩放到实际大小
-                      /*_t.doZoom({
+                      _t.doZoom({
                         name: 'actualSize'
-                      })*/
+                      })
                     }
                   } else {
                     let data = _t.log.list[_t.log.current]
@@ -460,9 +467,9 @@
                     _t.editor.read(data.content)
                     _t.editor.paint()
                     // 缩放到实际大小
-                   /* _t.doZoom({
+                    _t.doZoom({
                       name: 'actualSize'
-                    })*/
+                    })
                   }
                 }
               })

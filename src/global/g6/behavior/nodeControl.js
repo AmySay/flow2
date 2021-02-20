@@ -382,7 +382,7 @@ export default {
         // 是否等比缩放
         // FIXME !!! 此处应该通过物料配置控制
         // _t.shapeControlPoint.isProportional = ['square', 'circle', 'bidirectional-arrow', 'arrow'].includes(model.shape)
-        _t.shapeControlPoint.isProportional = true
+        _t.shapeControlPoint.isProportional = false
         if (_t.config.tooltip.shapeControl) {
           _t.toolTip.create.call(_t, {
             left: model.x,
@@ -404,6 +404,8 @@ export default {
           }
           let width = model.width
           let height = model.height
+          // 设置宽高比
+          // const scale = width/ height
           if (position) {
             // 参照点，及当前controller的对角点
             // 参照点位置信息
@@ -423,16 +425,22 @@ export default {
             if (_t.shapeControlPoint.isProportional) {
               attrs.size[0] = attrs.size[1] = Math.abs(referencePoint.x - event.x)
             } else if (position.x > 0 && position.x < 1 && (position.y === 0 || position.y === 1)) {
+              console.log('2')
               attrs.x = originNodeModel.x
               attrs.size[0] = originNodeModel.size[0]
               attrs.size[1] = Math.abs(referencePoint.y - event.y)
             } else if (position.y > 0 && position.y < 1 && (position.x === 0 || position.x === 1)) {
+              console.log('3')
               attrs.y = originNodeModel.y
               attrs.size[0] = Math.abs(referencePoint.x - event.x)
               attrs.size[1] = originNodeModel.size[1]
             } else {
+              console.log('4')
               attrs.size[0] = Math.abs(referencePoint.x - event.x)
               attrs.size[1] = Math.abs(referencePoint.y - event.y)
+              // const oWidth = Math.abs(referencePoint.y - event.y) * scale
+              // attrs.size[1] = Math.abs(referencePoint.y - event.y)
+              // attrs.size[0] = oWidth
             }
             // 处理宽高最小值
             if (attrs.size[0] < originNodeModel.minWidth || attrs.size[1] < originNodeModel.minHeight) {
