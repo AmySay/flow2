@@ -353,7 +353,7 @@
       },
       handleToolClick (item, val) {
         let _t = this
-        console.log('handleToolClick', item.name, val)
+        console.log('handleToolClick---------', item.name, val)
         if (item.disabled) {
           return
         }
@@ -364,6 +364,7 @@
         switch (item.name) {
         case 'fill':
         case 'lineColor':
+        case 'canvasBackgroundColor':
           _t.formData[item.name] = val
           payload = {
             ...payload,

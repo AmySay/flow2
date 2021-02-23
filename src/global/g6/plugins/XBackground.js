@@ -10,7 +10,7 @@ import createDOM from '@antv/util/lib/dom/create-dom'
 import modifyCSS from '@antv/util/lib/dom/modify-css'
 
 export default class XBackground extends Grid {
-  init () {
+  init() {
     let _t = this
     const graph = _t.get('graph')
     const graphContainer = graph.get('container')
@@ -26,14 +26,17 @@ export default class XBackground extends Grid {
     _t.set('container', backgroundContainer)
     _t.set('imgDom', imgDom)
   }
-  getEvents () {
+
+  getEvents() {
     return {
+      'background:set': 'setBackground',
       'background:reset': 'resetBackground',
       'background:update': 'updateBackground'
     }
   }
+
   // 重置背景
-  resetBackground (e) {
+  resetBackground(e) {
     let _t = this
     let imgDom = _t.get('imgDom')
     if (imgDom) {
@@ -43,7 +46,8 @@ export default class XBackground extends Grid {
       })
     }
   }
-  updateBackground (data) {
+
+  updateBackground(data) {
     let _t = this
     let imgDom = _t.get('imgDom')
     if (imgDom) {
@@ -53,11 +57,27 @@ export default class XBackground extends Grid {
       })
     }
   }
-  updateGrid () {}
-  getContainer () {
+
+  // 背景颜色
+  setBackground(e) {
+    let _t = this
+    this.resetBackground()
+    let container = _t.get('container')
+    if (container) {
+      modifyCSS(container, {
+        backgroundColor: e
+      })
+    }
+  }
+
+  updateGrid() {
+  }
+
+  getContainer() {
     return this.get('container')
   }
-  destroy () {
+
+  destroy() {
     let _t = this
     const graph = _t.get('graph')
     const graphContainer = graph.get('container')

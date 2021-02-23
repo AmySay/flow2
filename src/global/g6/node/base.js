@@ -76,6 +76,10 @@ export default {
       size:cfg.size
     };
     group.icon.attr(style);
+    // 绘制锚点
+    utils.anchor.update(cfg, group)
+    // 绘制shapeControl
+    utils.shapeControl.update(cfg, group)
   },
   getAnchorPoints(cfg) {
     return [

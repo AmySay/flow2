@@ -121,7 +121,7 @@
           container: sketchpad,
           width: sketchpad.clientWidth,
           height: sketchpad.clientHeight,
-          enableStack:true,
+          enableStack: true,
           fitView: true,
           fitViewPadding: 20,
           // 模式
@@ -853,6 +853,9 @@
                 }
                 break
             }
+            break
+          case 'canvasBackgroundColor':
+            _t.editor.emit('background:set', info.data)
             break
           case 'up':
           case 'down':

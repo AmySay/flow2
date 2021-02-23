@@ -31,6 +31,10 @@
   content: "\e653";
 }
 
+.xfv-icon-ios-color-palette-outline:before {
+  content: "\F192";
+}
+
 .xfv-icon-asynch-arraw:before {
   content: "\e601";
 }
