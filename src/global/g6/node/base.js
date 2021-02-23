@@ -24,7 +24,6 @@ export default {
     const size = this.getSize(cfg)
     width = size[0]
     height = size[1]
-    console.log(size, '----size')
     if (this.options.icon) {
       let attrs = {
         x: this.options.iconStyle.left,
@@ -66,7 +65,18 @@ export default {
   //   // this.group.clear()
   //   // this.drawIcon(cfg, this.group)
   // },
-  update: undefined,
+  update(cfg, node) {
+    const [width,height] = cfg.size
+    const group = node.getContainer();
+    const style = {
+      width,
+      height,
+      x:-width / 2,
+      y:-height / 2,
+      size:cfg.size
+    };
+    group.icon.attr(style);
+  },
   getAnchorPoints(cfg) {
     return [
       [0.5, 0], // top

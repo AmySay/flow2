@@ -113,8 +113,6 @@
     },
     methods: {
       onSubmit() {
-        console.log(this.editor)
-        console.log(this.currentItem)
         // this.$X.utils.bus.$emit('submit', { form: this.form, paramList: this.paramList })
         let _t = this
         if (_t.currentItem.length) {

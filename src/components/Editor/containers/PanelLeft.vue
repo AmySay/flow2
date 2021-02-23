@@ -63,7 +63,6 @@
     computed: {
       materials() {
         const materials = []
-        console.log(this.devices)
         if (this.devices && Object.entries(this.devices).length) {
           for (let k in this.devices) {
             const temp = {
@@ -74,7 +73,6 @@
               children: this.devices[k].map(item => {
                   const height = $X.$X.iconStyle[item.name].height
                   const width = $X.$X.iconStyle[item.name].width
-                  console.log(height, width)
                   return {
                     shape: item.name,
                     originId: item.id,

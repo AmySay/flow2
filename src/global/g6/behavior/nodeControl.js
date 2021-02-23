@@ -67,7 +67,6 @@ export default {
       }
     },
     startAddNode(node) {
-      // console.log('startAddNode', node)
       let _t = this
       // 初始化数据
       _t.info = {
@@ -254,7 +253,6 @@ export default {
         // 处理线条目标点
         if (anchorPoints && anchorPoints.length) {
           // 获取距离指定坐标最近的一个锚点
-          console.log(event)
           sourceAnchor = _t.info.node.getLinkPoint({x: event.x, y: event.y})
         }
         _t.drawLine.currentLine = _t.graph.addItem('edge', {
@@ -384,7 +382,7 @@ export default {
         // 是否等比缩放
         // FIXME !!! 此处应该通过物料配置控制
         // _t.shapeControlPoint.isProportional = ['square', 'circle', 'bidirectional-arrow', 'arrow'].includes(model.shape)
-        _t.shapeControlPoint.isProportional = true
+        _t.shapeControlPoint.isProportional = false
         if (_t.config.tooltip.shapeControl) {
           _t.toolTip.create.call(_t, {
             left: model.x,
@@ -406,6 +404,8 @@ export default {
           }
           let width = model.width
           let height = model.height
+          // 设置宽高比
+          // const scale = width/ height
           if (position) {
             // 参照点，及当前controller的对角点
             // 参照点位置信息
@@ -425,16 +425,22 @@ export default {
             if (_t.shapeControlPoint.isProportional) {
               attrs.size[0] = attrs.size[1] = Math.abs(referencePoint.x - event.x)
             } else if (position.x > 0 && position.x < 1 && (position.y === 0 || position.y === 1)) {
+              console.log('2')
               attrs.x = originNodeModel.x
               attrs.size[0] = originNodeModel.size[0]
               attrs.size[1] = Math.abs(referencePoint.y - event.y)
             } else if (position.y > 0 && position.y < 1 && (position.x === 0 || position.x === 1)) {
+              console.log('3')
               attrs.y = originNodeModel.y
               attrs.size[0] = Math.abs(referencePoint.x - event.x)
               attrs.size[1] = originNodeModel.size[1]
             } else {
+              console.log('4')
               attrs.size[0] = Math.abs(referencePoint.x - event.x)
               attrs.size[1] = Math.abs(referencePoint.y - event.y)
+              // const oWidth = Math.abs(referencePoint.y - event.y) * scale
+              // attrs.size[1] = Math.abs(referencePoint.y - event.y)
+              // attrs.size[0] = oWidth
             }
             // 处理宽高最小值
             if (attrs.size[0] < originNodeModel.minWidth || attrs.size[1] < originNodeModel.minHeight) {
@@ -470,42 +476,8 @@ export default {
             width: attrs.size[0],
             height: attrs.size[1]
           }, group)
-          // let {width, height, minWidth, minHeight, label} = _t.info.node
-          // let node = {
-          //   ..._t.info.node,
-          //   id: G6.Util.uniqueId(),
-          //   x: event.x,
-          //   y: event.y,
-          //   size: [width, height],
-          //   minWidth: minWidth,
-          //   minHeight: minHeight,
-          //   label: label,
-          //   style: {
-          //     fill: _t.graph.$X.fill,
-          //     fillOpacity: _t.graph.$X.fillOpacity,
-          //     stroke: _t.graph.$X.lineColor,
-          //     strokeOpacity: _t.graph.$X.strokeOpacity,
-          //     lineWidth: _t.graph.$X.lineWidth,
-          //     ...config.edge.type[_t.graph.$X.lineDash]
-          //   }
-          // }
-          // _t.graph.addItem('node', node)
           // 更新节点
-
-          // _t.graph.updateItem(_t.info.node, attrs)
-          // _t.graph.refreshItem(_t.info.node)
-          console.log(_t.graph)
-          console.log(_t.info)
-          console.log(attrs, '----attrs--')
-          // let id = _t.info.node.get('id')
-          // let a = _t.graph.findById(id)
-          // id.attrs({
-          //   width: 100,
-          //   height: 100
-          // })
-          // _t.graph.updateItem(id, attrs)
-          utils.edge.ShowObjProperty1(_t.graph, '+++++++++++++++++++++++++++++++++++shapeControlPointmoveing---')
-          utils.edge.ShowObjProperty1(_t.info, '+++++++++++++++++++++++++++++++++++shapeControlPointmoveing2---')
+          _t.graph.updateItem(_t.info.node, attrs)
           if (_t.config.shapeControlPoint.updateEdge) {
             // 更新边
             utils.edge.update(_t.info.node, _t.graph)
@@ -531,10 +503,19 @@ export default {
             width: attrs.size[0],
             height: attrs.size[1]
           }, group)
-          // 更新节点
-          _t.graph.updateItem(_t.info.node.getModel(), attrs)
-          // 强制刷新无用
-          _t.graph.refreshItem(_t.info.node.getModel())
+          // 更新节点 这里也可以实现拖拽更新图片大小
+          // const [width,height] = attrs.size
+          // console.log(_t.info.node.getModel())
+          // _t.graph.addItem('node', {
+          //   ..._t.info.node.getModel(),
+          //   // x: 0 - width / 2,
+          //   // y: 0 - height / 2,
+          //   // width: width /2 ,
+          //   // height: height/2,
+          // })
+          // _t.graph.removeItem(_t.info.node)
+          // utils.edge.ShowObjProperty1(_t.graph, '+++++++++++++++++++++++++++++++++++shapeControlPointmoveing---')
+          // utils.edge.ShowObjProperty1(_t.info, '+++++++++++++++++++++++++++++++++++shapeControlPointmoveing2---')
           if (_t.config.shapeControlPoint.updateEdge) {
             // 更新边
             utils.edge.update(_t.info.node, _t.graph)

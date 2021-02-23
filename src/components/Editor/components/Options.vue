@@ -353,6 +353,7 @@
             model
           }
         }
+        console.log(currentItemArr)
         // 广播事件
         _t.$X.utils.bus.$emit('editor/currentItem/update', currentItemArr)
       }
