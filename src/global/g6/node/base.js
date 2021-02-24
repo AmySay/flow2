@@ -4,7 +4,7 @@
  * 节点基础方法
  */
 import utils from '../utils'
-
+import * as G6Util from '@antv/util'
 export default {
   shape: null,
   group: null,
@@ -12,7 +12,9 @@ export default {
     const shapeType = this.shapeType
     const style = this.getShapeStyle(cfg)
     const shape = group.addShape(shapeType, {
-      attrs: style
+      attrs: style,
+      name: 'XFCNodeKeyShape',
+      draggable: true
     })
     this.shape = shape
     this.group = group
@@ -52,34 +54,33 @@ export default {
     }
     console.log(attributes, methods)
   },
-  // update(cfg, group) {
-  //   this.ShowObjProperty1(cfg, 'cfgupdate+++++++++++++++++++++')
-  //   console.log(cfg, '---------cfg-update----------')
-  //   console.log(group, '---------cfg---update--------')
-  //   this.ShowObjProperty1(group, 'groupupdate___________________')
-  //   const style = group.getKeyShapeStyle();
-  //   console.log(style)
-  //   // group.refresh()
-  //   // this.group.get()
-  //   // this.group.removeChild(group)
-  //   // this.group.clear()
-  //   // this.drawIcon(cfg, this.group)
-  // },
   update(cfg, node) {
-    const [width,height] = cfg.size
+
+    // 自定义节点配置
+    const defaultStyle = this.options
+    // 从新计算图形样式
+    const shapeStyle = this.getShapeStyle(cfg)
+    const style = G6Util.mix({}, defaultStyle, shapeStyle)
+    // 更新图形
+    this.updateShape(cfg, node, style)
+    // const [width,height] = cfg.size
     const group = node.getContainer();
-    const style = {
-      width,
-      height,
-      x:-width / 2,
-      y:-height / 2,
-      size:cfg.size
-    };
+    // const style = {
+    //   width,
+    //   height,
+    //   x:-width / 2,
+    //   y:-height / 2,
+    //   size:cfg.size
+    // };
     group.icon.attr(style);
-    // 绘制锚点
-    utils.anchor.update(cfg, group)
-    // 绘制shapeControl
-    utils.shapeControl.update(cfg, group)
+  },
+  updateShape (cfg, item, style) {
+    const keyShape = item.get('keyShape')
+    keyShape.attr({
+      ...style
+    })
+    // 更新图形文本
+    // this.updateLabel(cfg, item)
   },
   getAnchorPoints(cfg) {
     return [
@@ -101,5 +102,13 @@ export default {
     utils.anchor.draw(cfg, group)
     // 绘制shapeControl
     utils.shapeControl.draw(cfg, group)
+  },
+  // 更新完成后更新锚点
+  afterUpdate (cfg, item) {
+    const group = item.getContainer()
+    // 更新锚点
+    utils.anchor.update(cfg, group)
+    // 更新shapeControl
+    utils.shapeControl.update(cfg, group)
   }
 }

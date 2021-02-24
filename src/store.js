@@ -1245,6 +1245,18 @@ export default new Vuex.Store({
               enable: true,
               disabled: false,
               divider: false
+            },
+            {
+              name: 'excel',
+              label: 'Excel',
+              lang: '',
+              type: 'normal',
+              icon: '',
+              style: {},
+              data: false,
+              enable: true,
+              disabled: false,
+              divider: false
             }
           ]
         },

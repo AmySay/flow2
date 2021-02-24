@@ -12,7 +12,7 @@
     padding-top: 10px;
     height: 100%;
     overflow: hidden;
-    .el-form-item{
+    .el-form-item {
       margin-bottom: 5px;
     }
   }
@@ -123,6 +123,7 @@
             _t.currentItem[0].model.params = params
           }
         }
+        console.log(this.form, this.paramList)
         // 广播事件
         _t.$X.utils.bus.$emit('editor/currentItem/update', _t.currentItem)
       }

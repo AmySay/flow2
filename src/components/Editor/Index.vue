@@ -49,6 +49,7 @@
   import Mousetrap from 'mousetrap'
   import config from './config/index'
   import {getDevice, getSvgById} from '../../api/svg'
+  import XLSX from 'xlsx'
   import _ from 'lodash'
 
   export default {
@@ -809,6 +810,35 @@
               link.click()
               // no longer need to read the blob so it's revoked
               URL.revokeObjectURL(url)
+            } else if (info.data === 'excel') {
+              /!* create a new blank workbook *!/
+              let wb = XLSX.utils.book_new();
+              let dataList = []
+              _t.editor.getNodes().forEach((node, index) => {
+                const model = node.getModel()
+                if (model.params) {
+                  dataList.push(model.params)
+                }
+              })
+              if (!dataList.length) return
+              const excelData = _.groupBy(dataList, 'originId')
+              Object.entries(excelData).forEach(sheet => {
+                const sheetData = sheet[1]
+                const sheetName = sheetData[0].form.modelName
+                let s = sheetData.map((row, rowIndex) => {
+                  let obj = {}
+                  row.paramList.map(cell => {
+                    const name = cell.name
+                    obj = {'uid': rowIndex, ...obj, [name]: cell.defaultValue}
+                  });
+                  return obj
+                })
+                console.log(s)
+                XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(s), sheetName);
+              })
+              // let sheetData = [{department: "行政部", count: 2}, {department: "前端部", count: 2}];
+              const workbookBlob = this.workbook2blob(wb);
+              this.openDownloadDialog(workbookBlob, `GUI.xlsx`);
             }
             break
           case 'selectAll':
@@ -900,6 +930,49 @@
           ...data
         }
       },
+      openDownloadDialog(blob, fileName) {
+        if (typeof blob == "object" && blob instanceof Blob) {
+          blob = URL.createObjectURL(blob); // 创建blob地址
+        }
+        var aLink = document.createElement("a");
+        aLink.href = blob;
+        // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，有时候 file:///模式下不会生效
+        aLink.download = fileName || "";
+        var event;
+        if (window.MouseEvent) event = new MouseEvent("click");
+        //   移动端
+        else {
+          event = document.createEvent("MouseEvents");
+          event.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        }
+        aLink.dispatchEvent(event);
+      },
+      workbook2blob(workbook) {
+        // 生成excel的配置项
+        var wopts = {
+          // 要生成的文件类型
+          bookType: "xlsx",
+          // // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
+          bookSST: false,
+          type: "binary"
+        };
+        var wbout = XLSX.write(workbook, wopts);
+
+        // 将字符串转ArrayBuffer
+        function s2ab(s) {
+          var buf = new ArrayBuffer(s.length);
+          var view = new Uint8Array(buf);
+          for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
+          return buf;
+        }
+
+        var blob = new Blob([s2ab(wbout)], {
+          type: "application/octet-stream"
+        });
+        return blob;
+      },
+
+
       bindShortcuts() {
         let _t = this
         _t.toolList.forEach(item => {
