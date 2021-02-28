@@ -8,10 +8,13 @@
 import nodeControl from './nodeControl'
 // 预览画布交互
 import previewCanvas from './previewCanvas'
+// 微调交互
+import paramsControl from './paramsControl'
 
 const obj = {
   nodeControl,
-  previewCanvas
+  previewCanvas,
+  paramsControl
 }
 
 export default function (G6) {

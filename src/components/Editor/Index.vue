@@ -163,12 +163,24 @@
                 }
               }
             ],
+            // 微调
+            paramsEdit: [
+              {
+                type: 'params-control',
+                config: {
+                  dragNode: {
+                    // 是否在拖拽节点时更新所有与之相连的边
+                    updateEdge: false
+                  },
+                }
+              }
+            ],
             // 只读，
             preview: [
               'zoom-canvas',
               'drag-canvas',
               'preview-canvas'
-            ]
+            ],
           },
           // 节点交互样式
           nodeStateStyles: {
@@ -564,7 +576,8 @@
             _t.$X.utils.bus.$emit('editor/previewModel/open', previewData)
             break
           case 'edit':
-            _t.doSetMode(info.name)
+            console.log(info)
+            _t.doSetMode(info.data)
             break
           case 'fill':
             _t.editor.$X.fill = info.data

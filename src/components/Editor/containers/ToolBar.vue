@@ -315,6 +315,7 @@
         case 'lineType':
         case 'lineDash':
         case 'preview':
+        case 'edit':
         case 'download':
         case 'canvasBackground':
           payload = {

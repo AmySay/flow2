@@ -1092,7 +1092,7 @@ export default new Vuex.Store({
             divider: true
           }
         },
-        {
+        /*{
           name: 'edit',
           label: 'edit',
           lang: 'L10023',
@@ -1115,8 +1115,73 @@ export default new Vuex.Store({
             style: {},
             divider: false
           }
-        },
+        },*/
         {
+          name: 'edit',
+          label: 'edit',
+          lang: 'L10023',
+          type: 'dropdown-list',
+          icon: 'edit',
+          enable: true,
+          enableMode: ['edit', 'preview','paramsEdit'],
+          disabled: false,
+          disabledMode: ['edit', 'preview','paramsEdit'],
+          shortcuts: '',
+          toolbar: {
+            enable: true,
+            position: 'center',
+            style: {},
+            divider: false
+          },
+          contextmenu: {
+            enable: true,
+            target: ['canvas'],
+            style: {},
+            divider: false
+          },
+          // 默认选中项index
+          selected: 0,
+          lockLabel: true,
+          // 子节点
+          children: [
+            {
+              name: 'edit',
+              label: '完全模式',
+              lang: '',
+              type: 'normal',
+              icon: '',
+              style: {},
+              data: false,
+              enable: true,
+              disabled: false,
+              divider: false
+            },
+            {
+              name: 'paramsEdit',
+              label: '微调模式',
+              lang: '',
+              type: 'normal',
+              icon: '',
+              style: {},
+              data: false,
+              enable: true,
+              disabled: false,
+              divider: false
+            }, {
+              name: 'preview',
+              label: '只读模式',
+              lang: '',
+              type: 'normal',
+              icon: '',
+              style: {},
+              data: false,
+              enable: true,
+              disabled: false,
+              divider: false
+            }
+          ]
+        },
+        /*{
           name: 'preview',
           label: 'preview',
           lang: 'L10024',
@@ -1169,7 +1234,7 @@ export default new Vuex.Store({
               divider: false
             }
           ]
-        },
+        },*/
         {
           name: 'upload',
           label: 'upload',
@@ -1260,7 +1325,7 @@ export default new Vuex.Store({
             }
           ]
         },
-        {
+        /*{
           name: 'canvasBackground',
           label: 'Canvas background',
           lang: 'L10034',
@@ -1311,7 +1376,7 @@ export default new Vuex.Store({
               divider: false
             },
           ]
-        },
+        },*/
         {
           name: 'canvasBackgroundColor',
           label: '画布背景颜色',
@@ -1363,7 +1428,7 @@ export default new Vuex.Store({
             divider: false
           }
         },
-        {
+        /*{
           name: 'language',
           label: 'language',
           lang: 'L10026',
@@ -1416,8 +1481,8 @@ export default new Vuex.Store({
               divider: false
             }
           ]
-        },
-        {
+        },*/
+        /*{
           name: 'github',
           label: 'github',
           lang: 'L10027',
@@ -1466,7 +1531,7 @@ export default new Vuex.Store({
             style: {},
             divider: false
           }
-        },
+        },*/
         // FIXME 纯快捷键
         {
           name: 'up',
