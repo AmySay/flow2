@@ -313,7 +313,6 @@ export default {
       },
       stop(event) {
         let _t = this
-        debugger
         let endNode = event.item
         let startModel = _t.info.node.getModel()
         let endModel = endNode.getModel()

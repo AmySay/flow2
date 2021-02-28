@@ -265,12 +265,6 @@
                 style: data[0].model.style
               })
             }
-            // const group = node.getContainer();
-            // let group = _t.editor.get('group')
-            // 绘制锚点
-            // utils.anchor.update(group, item.model)
-            // 绘制shapeControl
-            // utils.shapeControl.update(group, item.model)
           })
           _t.editor.paint()
         })
@@ -461,7 +455,6 @@
             })
             if (['undo', 'redo'].includes(info.name)) {
               _t.$nextTick(function () {
-                debugger
                 if (_t.log.list.length) {
                   if (_t.log.current === 0) {
                     let data = _t.log.list[0]

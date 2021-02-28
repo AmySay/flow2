@@ -1646,7 +1646,6 @@ export default new Vuex.Store({
       if (!data.hasOwnProperty('action') || !data.action) {
         return
       }
-      debugger
       let oldLog = state.editor.log
       let maxLog = state.editor.maxLog
       let log = {
@@ -1717,8 +1716,6 @@ export default new Vuex.Store({
           log.current = log.list.length - 1
           break
       }
-      debugger
-      console.log(log)
       state.editor.log = log
     }
   },
