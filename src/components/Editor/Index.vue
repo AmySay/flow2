@@ -315,7 +315,7 @@
       },
       _nodeHover(event) {
         let _t = this
-        // FIXME 当节点未激活时才可设置hover true状态
+        // FIXME 当节点未激活时才可设置hover true状态 11
         if (!event.item.hasState('active')) {
           _t.editor.setItemState(event.item, 'hover', true)
         }
