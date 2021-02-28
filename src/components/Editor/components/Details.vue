@@ -22,12 +22,13 @@
   <div class="nodeDetails">
     <div>
       <span>{{currentShape }}</span>
-      <el-button type="primary" @click="onSubmit" style='margin-left: 10px'>提交</el-button>
+      <el-button type="primary" @click="onSubmit" style='margin-left: 10px' :disabled="preview">提交</el-button>
     </div>
     <el-form :model="form" label-position='top' label-width="100px">
       <el-form-item label="tagName" prop="tagName" class='el-form-details'>
         <el-select
           v-model="form.tagName"
+          :disabled="preview"
           style='width:100%'
           clearable
         >
@@ -43,6 +44,7 @@
       <el-form-item label="modelName" prop="modelName" class='el-form-details'>
         <el-select
           v-model="form.modelName"
+          :disabled="preview"
           style='width:100%'
           clearable
         >
@@ -68,7 +70,7 @@
               </el-tooltip>
 
             </span>
-          <el-input v-model="item.defaultValue" :placehold='item.description'>
+          <el-input :disabled="preview" v-model="item.defaultValue" :placehold='item.description'>
             <template v-if='item.unit' slot="append">{{item.unit}}</template>
           </el-input>
         </el-form-item>
@@ -90,7 +92,8 @@
         },
         paramList: [],
         firstItem: null,
-        watchFlag: false
+        watchFlag: false,
+        preview: false
       }
     },
     name: 'Details',
@@ -155,12 +158,16 @@
           }
         },
         deep: true
+      },
+      'editor._cfg.mode'(val) {
+        console.log(val)
+        this.preview = val === 'preview' ? true : false
       }
     },
     computed: {
       ...mapGetters([
         'editor',
-        'currentItem'
+        'currentItem',
       ]),
       originData() {
         return this.originDataObj.originData || []
