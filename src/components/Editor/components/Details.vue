@@ -89,7 +89,8 @@
           modelName: ''
         },
         paramList: [],
-        firstItem: null
+        firstItem: null,
+        watchFlag: false
       }
     },
     name: 'Details',
@@ -136,9 +137,11 @@
           _t.firstItem = val[0]
           if (_t.firstItem && _t.firstItem.model.params) {
             const params = JSON.parse(JSON.stringify(_t.firstItem.model.params))
+            this.watchFlag = true
             this.form = params.form
             this.paramList = params.paramList
           } else {
+            this.watchFlag = false
             _t.form = {}
             _t.paramList = []
           }
@@ -147,7 +150,7 @@
       },
       modelList: {
         handler(val) {
-          if (val && val.paramList) {
+          if (val && val.paramList && !this.watchFlag) {
             this.paramList = this.modelList.paramList
           }
         },
