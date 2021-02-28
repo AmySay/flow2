@@ -40,7 +40,7 @@
   import G6 from '@/global/g6/index'
   // 导航器
   // 自定义栅格插件
-  import XGrid from '@/global/g6/plugins/XGrid'
+  // import XGrid from '@/global/g6/plugins/XGrid'
   // 背景图
   import XBackground from '@/global/g6/plugins/XBackground'
   // 全屏
@@ -111,14 +111,14 @@
         let el = _t.$el
         // 画板
         let sketchpad = el.querySelector('#sketchpad')
-        const grid = new XGrid()
-        const background = new XBackground()
+        // const grid = new XGrid()
+        // const background = new XBackground()
+        const plugins = []
+        const background = new XBackground(_t.$X.config.background)
+        plugins.push(background)
         // 生成编辑器实例
         _t.editor = new G6.Graph({
-          plugins: [
-            grid,
-            background
-          ],
+          plugins,
           container: sketchpad,
           width: sketchpad.clientWidth,
           height: sketchpad.clientHeight,
