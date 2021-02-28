@@ -208,7 +208,7 @@ export default {
       },
       stop(event) {
         let _t = this
-        // 记录操作日志
+        // 记录操作日志11
         _t.graph.emit('editor:record', 'dragNode stop')
         _t.dragNode.clear.call(_t)
         _t.graph.paint()
