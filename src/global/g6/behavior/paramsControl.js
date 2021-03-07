@@ -119,7 +119,7 @@ export default {
           let {width, height, minWidth, minHeight, label} = _t.info.node
           let node = {
             ..._t.info.node,
-            id: G6.Util.uniqueId(),
+            id: G6Util.uniqueId(),
             x: event.x,
             y: event.y,
             size: [width, height],

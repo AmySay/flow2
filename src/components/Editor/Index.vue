@@ -38,6 +38,8 @@
   import utils from '@/global/g6/utils'
   // 扩展了节点、边的G6
   import G6 from '@/global/g6/index'
+  import * as G6Util from '@antv/util'
+
   // 导航器
   // 自定义栅格插件
   // import XGrid from '@/global/g6/plugins/XGrid'
@@ -233,6 +235,19 @@
         this.getDevices()
         // 挂载G6配置
         _t.editor.$C = G6.$C
+        _t.editor.$D = {
+          fill: '#FFFFFF',
+          fillOpacity: 1,
+          lineColor: '#000000',
+          strokeOpacity: 1,
+          lineWidth: 1,
+          lineType: 'x-line',
+          lineDash: 'solid',
+          startArrow: false,
+          endArrow: false,
+          lineAppendWidth: 10,
+          autoRotate: true
+        }
         // 设置模式为编辑
         _t.doSetMode('edit')
         // 设置默认中心
@@ -383,7 +398,7 @@
       doAddNode(info) {
         let _t = this
         let node = {
-          id: G6.Util.uniqueId(),
+          id: G6Util.uniqueId(),
           shape: info.shape,
           label: info.defaultLabel,
           originId: info.originId,
@@ -518,7 +533,7 @@
                   }
                   let node = {
                     ...model,
-                    id: G6.Util.uniqueId(),
+                    id: G6Util.uniqueId(),
                     groupId: '',
                     x,
                     y
@@ -848,7 +863,7 @@
             }
             break
           case 'selectAll':
-            let groupId = G6.Util.uniqueId()
+            let groupId = G6Util.uniqueId()
             _t.editor.getNodes().forEach(node => {
               // 更新节点
               _t.editor.updateItem(node, {

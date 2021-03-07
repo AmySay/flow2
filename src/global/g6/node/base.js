@@ -80,7 +80,7 @@ export default {
       ...style
     })
     // 更新图形文本
-    // this.updateLabel(cfg, item)
+    this.updateLabel(cfg, item)
   },
   getAnchorPoints(cfg) {
     return [

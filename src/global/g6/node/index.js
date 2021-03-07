@@ -4,16 +4,16 @@
  * 注册自定义节点
  */
 
-import general from './general'
-import arrow from './arrow'
+// import general from './general'
+// import arrow from './arrow'
 import base from './base'
-import Util from '@antv/g6/src/util/index'
-import Global from '@antv/g6/src/global'
+import Util from '@antv/g6/lib/util/index'
+import Global from '@antv/g6/lib/global'
 import $X from '../../../components/Editor/config/index'
 
 const obj = {
-  ...general,
-  ...arrow
+  // ...general,
+  // ...arrow
 }
 export default function (G6, devices) {
   if (devices && devices.length) {
