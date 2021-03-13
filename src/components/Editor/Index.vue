@@ -80,10 +80,10 @@
 
       <div class='button_content'>
         <el-button type="">开始仿真</el-button>
-        <el-button type="">获取开关倒闸方案</el-button>
+        <el-button type="" @click='getRegtogglers'>获取开关倒闸方案</el-button>
         <div style="margin-top: 10px">
-          <el-button>开关设置</el-button>
-          <el-button type="">查看仿真波形</el-button>
+          <el-button @click='settoggleractionFn'>开关设置</el-button>
+          <el-button @click='getelementparasFn'>查看仿真波形</el-button>
         </div>
       </div>
       <div class="flex_layout">
@@ -93,6 +93,8 @@
             <el-table
               :data="tableData"
               border
+              empty-text = '暂无数据'
+              height="250px"
               style="width: 100%">
               <el-table-column
                 v-for='item in tableHeader'
@@ -113,11 +115,8 @@
 
         <div class="flex—item">
           <el-divider content-position="left">曲线图</el-divider>
-          <el-card class="box-card">
-            <div id="main">
-
+            <div id="main" style="height: 100%">
             </div>
-          </el-card>
         </div>
       </div>
     </div>
@@ -160,8 +159,26 @@ import {
   getDevice,
   getSvgById
 } from '../../api/svg'
+import {
+  settingparameters,
+  startrunning,
+  regtogglers,
+  settoggleraction,
+  getelementparas
+} from '../../api/yuTao'
 import XLSX from 'xlsx'
 import _ from 'lodash'
+import moment from 'moment'
+
+import * as echarts from 'echarts/core';
+import { BarChart } from 'echarts/charts';
+import { LineChart } from 'echarts/charts';
+import { GridComponent } from 'echarts/components';
+// 注意，新的接口中默认不再包含 Canvas 渲染器，需要显示引入，如果需要使用 SVG 渲染模式则使用 SVGRenderer
+import { CanvasRenderer } from 'echarts/renderers';
+
+echarts.use([LineChart, GridComponent, CanvasRenderer]);
+
 
 export default {
   name: 'MaterialsEditor',
@@ -172,22 +189,11 @@ export default {
     PanelLeft,
     PanelRight,
     PreviewModel,
-    ContextMenu
+    ContextMenu,
   },
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-        },{
-          date: '2016-05-04',
-          name: '王小虎',
-        },{
-          date: '2016-05-01',
-          name: '王小虎',
-        },
-      ],
+      tableData: [],
       tableHeader: [
         {
           label: '开关编号',
@@ -224,32 +230,55 @@ export default {
     ])
   },
   methods: {
-    drawChart() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("main"));
-      // 指定图表的配置项和数据
+    getelementparasFn() {
+      getelementparas({ "eleNo": 123 })
+      let res = {
+        "element_paras": {
+          "qSlack": 777,
+          "aBus": 444,
+          "pSlack": 666,
+          "time": 15129,
+          "deltaGENROU": 30,
+          "vBou": 555,
+          "omegaGENROU": 45,
+          "iLine": 5
+        }
+      }
       let option = {
-        title: {
-          text: "ECharts 入门示例"
-        },
-        tooltip: {},
-        legend: {
-          data: ["销量"]
-        },
         xAxis: {
-          data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+          type: 'category',
+          data: ['15129', '15130', '15131', '15132', '15133', '15134', '15135']
         },
-        yAxis: {},
-        series: [
-          {
-            name: "销量",
-            type: "bar",
-            data: [5,20,36,10,10,20]
-          }
-        ]
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: [620, 732, 801, 934, 1090, 1130, 1320],
+          type: 'line',
+          smooth: true
+        }]
       };
-      // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
+      this.drawChart(option)
+    },
+    settoggleractionFn() {
+      settoggleraction({ "togglerNo": 123 })
+    }
+    ,
+    getRegtogglers() {
+      regtogglers().then(res => {
+        this.tableData = res.reg_togglers.map(item => {
+          return {
+            name: item,
+            date: moment().format("YYYY-MM-DD")
+          }
+        })
+      })
+    },
+    async drawChart(option) {
+      if (option){
+        let myChart = echarts.init(document.getElementById("main"));
+        myChart.setOption(option);
+      }
     },
     getDevices() {
       let res = {
@@ -266,7 +295,8 @@ export default {
         })
       }
       this.devices = _.groupBy(res.data,'typeId')
-    },
+    }
+    ,
     init() {
       let _t = this
       let el = _t.$el
@@ -449,19 +479,23 @@ export default {
       _t.bindUnload()
       // 更新编辑器实例
       _t.$store.commit('editor/instance/update',_t.editor)
-    },
+    }
+    ,
     _canvasMousedown() {
       let _t = this
       _t.doClearAllStates()
       // 更新currentItem
       _t.$store.commit('editor/currentItem/update',[])
-    },
+    }
+    ,
     _canvasMouseup() {
       // let _t = this
       // _t.editor.setMode('edit')
-    },
+    }
+    ,
     _editorClick(event) {
-    },
+    }
+    ,
     _nodeClick: _.debounce(function(event) {
       let _t = this
       const id = event.item._cfg.model && event.item._cfg.model.originId
@@ -473,27 +507,32 @@ export default {
       let _t = this
       _t.doClearAllStates()
       _t.editor.setItemState(event.item,'active',true)
-    },
+    }
+    ,
     _nodeHover(event) {
       let _t = this
       // FIXME 当节点未激活时才可设置hover true状态 11
       if (!event.item.hasState('active')) {
         _t.editor.setItemState(event.item,'hover',true)
       }
-    },
+    }
+    ,
     _nodeOut(event) {
       let _t = this
       _t.editor.setItemState(event.item,'hover',false)
-    },
+    }
+    ,
     _nodeContextmenu(event) {
-    },
+    }
+    ,
     _edgeMousedown(event) {
       let _t = this
       _t.doClearAllStates()
       if (event.item && !event.item.destroyed) {
         _t.editor.setItemState(event.item,'active',!event.item.hasState('active'))
       }
-    },
+    }
+    ,
     // 清除所有状态
     doClearAllStates() {
       let _t = this
@@ -510,7 +549,8 @@ export default {
       })
       _t.editor.paint()
       _t.editor.setAutoPaint(true)
-    },
+    }
+    ,
     doZoom(info,position) {
       let _t = this
       // 缩放率
@@ -540,7 +580,8 @@ export default {
         // _t.editor.zoomTo(ratio)
         _t.editor.zoomTo(ratio,center)
       }
-    },
+    }
+    ,
     doAddNode(info) {
       let _t = this
       let node = {
@@ -567,7 +608,8 @@ export default {
       }
       // 广播事件，通过自定义交互 node-control 添加节点
       _t.editor.emit('editor:addNode',node)
-    },
+    }
+    ,
     doEditorClick: _.debounce(function(info) {
       // 左边和右边联动
       const _t = this
@@ -590,7 +632,8 @@ export default {
           }))
         })
       }
-    },
+    }
+    ,
     doSetMode(name) {
       let _t = this
       _t.mode = name
@@ -607,7 +650,8 @@ export default {
         return item
       })
       _t.$store.commit('editor/toolList/update',toolList)
-    },
+    }
+    ,
     handleToolTrigger(info) {
       let _t = this
       // 是否记录日志标识
@@ -1101,14 +1145,16 @@ export default {
         // 记录操作日志
         _t.editor.emit('editor:record','handleToolTrigger')
       }
-    },
+    }
+    ,
     initInfo(data = {}) {
       let _t = this
       _t.editorInfo = {
         ..._t.defInfo,
         ...data
       }
-    },
+    }
+    ,
     openDownloadDialog(blob,fileName) {
       if (typeof blob == "object" && blob instanceof Blob) {
         blob = URL.createObjectURL(blob); // 创建blob地址
@@ -1125,7 +1171,8 @@ export default {
         event.initMouseEvent("click",true,false,window,0,0,0,0,0,false,false,false,false,0,null);
       }
       aLink.dispatchEvent(event);
-    },
+    }
+    ,
     workbook2blob(workbook) {
       // 生成excel的配置项
       var wopts = {
@@ -1149,7 +1196,8 @@ export default {
         type: "application/octet-stream"
       });
       return blob;
-    },
+    }
+    ,
 
 
     bindShortcuts() {
@@ -1175,14 +1223,16 @@ export default {
       document.addEventListener('keyup',function() {
         _t.$X.utils.bus.$emit('editor/contextmenu/close')
       })
-    },
+    }
+    ,
     bindUnload() {
       // todo
-      // window.onbeforeunload = function (event) {
-      //   event.returnValue = false
-      //   return false
-      // }
-    },
+      window.onbeforeunload = function (event) {
+        event.returnValue = false
+        return false
+      }
+    }
+    ,
     handleEditorClick() {
       let _t = this
       _t.$X.utils.bus.$emit('editor/contextmenu/close')
@@ -1206,7 +1256,10 @@ export default {
 
   },
   mounted() {
-    // this.drawChart();
+
+    setTimeout(function(){
+      this.drawChart();
+    }.bind(this))
   }
 }
 </script>

@@ -18,8 +18,6 @@ import 'x-highlight/dist/css/XHighlight.css'
 import 'highlight.js/styles/zenburn.css'
 
 import vClickOutside from 'v-click-outside'
-import echarts from "echarts";
-Vue.prototype.$echarts = echarts;
 // Vue 全局配置
 let isDev = process && process.env.NODE_ENV !== 'production'
 Vue.config.debug = isDev
@@ -36,7 +34,6 @@ Vue.prototype.$X = {
 }
 // i18n实例
 const i18nInstance = i18n(Vue, 'zh-CN')
-
 // 注册全局组件
 Vue.use(components)
 Vue.use(ElementUI, { size: 'small' })
