@@ -3,7 +3,8 @@ import { Message } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://qingpu.c2py.com/photinia-api/svg/', // url = base url + request url
+  // baseURL: 'http://qingpu.c2py.com/photinia-api/ /', // url = base url + request url
+  baseURL: 'http://testflight.jokco.com/pyapi/', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })

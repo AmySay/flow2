@@ -23,6 +23,7 @@ export default class XBackground extends Grid {
   init() {
     let _t = this
     const graph = _t.get('graph')
+    console.log(graph)
     const minZoom = graph.get('minZoom')
     const width = graph.get('width')
     const height = graph.get('height')

@@ -24,10 +24,16 @@
     left: 0 !important;
     overflow-x: hidden;
 
+
     .sketchpad {
-      margin-top: 0;
-      margin-bottom: 0;
+      width: 100% !important;
+      height: 100% !important;
+      left: 0% !important;
+      margin-left: 0 !important;
+      margin-top: 0px !important;
+      margin-bottom: 0px !important;
     }
+
   }
 
   .right_content {
@@ -61,7 +67,15 @@
   <!--    <Sketchpad></Sketchpad>-->
   <!--  </run>-->
   <div v-if="mode === 'run'" class="run">
-    <Sketchpad></Sketchpad>
+    <Sketchpad :sketchpadStyle="{
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        left: 0,
+        marginLeft: 0,
+        marginTop: 0,
+        marginBottom: 0
+      }"></Sketchpad>
     <div class="right_content">
 
       <div class='button_content'>
@@ -1192,8 +1206,7 @@ export default {
 
   },
   mounted() {
-    this.drawChart();
-
+    // this.drawChart();
   }
 }
 </script>
