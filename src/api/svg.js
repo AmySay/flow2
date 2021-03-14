@@ -1,17 +1,16 @@
-import request from '../global/utils/request'
+import {get} from '../global/utils/request'
+
 
 export function getDevice () {
-  return request({
+  return get({
     url: 'device',
-    method: 'get',
     params: ''
   })
 }
 
 export function getSvgById (id) {
-  return request({
+  return get({
     url: 'model',
-    method: 'get',
     params: { id }
   })
 }
