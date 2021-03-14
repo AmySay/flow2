@@ -79,7 +79,7 @@
     <div class="right_content">
 
       <div class='button_content'>
-        <el-button type="">开始仿真</el-button>
+        <el-button @click="dialogVisible = true">开始仿真</el-button>
         <el-button type="" @click='getRegtogglers'>获取开关倒闸方案</el-button>
         <div style="margin-top: 10px">
           <el-button @click='settoggleractionFn'>开关设置</el-button>
@@ -93,7 +93,7 @@
             <el-table
               :data="tableData"
               border
-              empty-text = '暂无数据'
+              empty-text='暂无数据'
               height="250px"
               style="width: 100%">
               <el-table-column
@@ -115,13 +115,65 @@
 
         <div class="flex—item">
           <el-divider content-position="left">曲线图</el-divider>
-            <div id="main" style="height: 100%">
-            </div>
+          <div id="main" style="height: 100%">
+          </div>
         </div>
       </div>
     </div>
 
+    <!---设置运行参数-->
+    <el-dialog
+      title="设置运行参数"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <el-form
+        :model="formData"
+        label-width="110px"
+      >
+        <el-form-item
+          label="文件名："
+          prop="file"
+        >
+          <el-select v-model="formData.file" style="width: 100%;">
+            <el-option label="文件一" value="fileName"></el-option>
+            <el-option label="文件二" value="fileName1"></el-option>
+          </el-select>
+        </el-form-item>
+
+
+        <el-form-item
+          label="故障路线编号："
+          prop="lineNo"
+        >
+          <el-input v-model="formData.lineNo"/>
+        </el-form-item>
+
+        <el-form-item
+          label="比例："
+          prop="ratio"
+        >
+          <el-input v-model="formData.ratio"/>
+        </el-form-item>
+
+        <el-form-item
+          label="故障时间："
+          prop="faultTime"
+        >
+          <el-input v-model="formData.faultTime"/>
+        </el-form-item>
+
+
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="settingparametersFn">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
+
+
   <div class="materials-editor" @click="handleEditorClick" v-else>
     <ToolBar></ToolBar>
     <Sketchpad></Sketchpad>
@@ -133,7 +185,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 import run from './containers/run'
 import ToolBar from './containers/ToolBar'
@@ -171,11 +223,11 @@ import _ from 'lodash'
 import moment from 'moment'
 
 import * as echarts from 'echarts/core';
-import { BarChart } from 'echarts/charts';
-import { LineChart } from 'echarts/charts';
-import { GridComponent } from 'echarts/components';
+import {BarChart} from 'echarts/charts';
+import {LineChart} from 'echarts/charts';
+import {GridComponent} from 'echarts/components';
 // 注意，新的接口中默认不再包含 Canvas 渲染器，需要显示引入，如果需要使用 SVG 渲染模式则使用 SVGRenderer
-import { CanvasRenderer } from 'echarts/renderers';
+import {CanvasRenderer} from 'echarts/renderers';
 
 echarts.use([LineChart, GridComponent, CanvasRenderer]);
 
@@ -193,6 +245,10 @@ export default {
   },
   data() {
     return {
+      dialogVisible: false,
+      formData:
+        {"faultTime": 0.2, "ratio": 0.6, "lineNo": 111, "file": "filename"}
+      ,
       tableData: [],
       tableHeader: [
         {
@@ -230,8 +286,14 @@ export default {
     ])
   },
   methods: {
+    settingparametersFn(){
+      console.log(this.formData)
+      settingparameters({...this.formData}).then(() => {
+        startrunning()
+      })
+    },
     getelementparasFn() {
-      getelementparas({ "eleNo": 123 })
+      getelementparas({"eleNo": 123})
       let res = {
         "element_paras": {
           "qSlack": 777,
@@ -261,9 +323,8 @@ export default {
       this.drawChart(option)
     },
     settoggleractionFn() {
-      settoggleraction({ "togglerNo": 123 })
-    }
-    ,
+      settoggleraction({"togglerNo": 123})
+    },
     getRegtogglers() {
       regtogglers().then(res => {
         this.tableData = res.reg_togglers.map(item => {
@@ -275,7 +336,7 @@ export default {
       })
     },
     async drawChart(option) {
-      if (option){
+      if (option) {
         let myChart = echarts.init(document.getElementById("main"));
         myChart.setOption(option);
       }
@@ -286,17 +347,16 @@ export default {
       }
       if (localStorage.getItem('devices')) {
         res.data = JSON.parse(localStorage.getItem('devices'))
-        this.devices = _.groupBy(res.data,'typeId')
+        this.devices = _.groupBy(res.data, 'typeId')
       } else {
         getDevice().then(res => {
-          localStorage.setItem('devices',JSON.stringify(res.data))
-          this.devices = _.groupBy(res.data,'typeId')
+          localStorage.setItem('devices', JSON.stringify(res.data))
+          this.devices = _.groupBy(res.data, 'typeId')
           window.location.reload()
         })
       }
-      this.devices = _.groupBy(res.data,'typeId')
-    }
-    ,
+      this.devices = _.groupBy(res.data, 'typeId')
+    },
     init() {
       let _t = this
       let el = _t.$el
@@ -425,47 +485,47 @@ export default {
       // 挂载G6配置
       _t.editor.$C = G6.$C
       // 设置模式为编辑 todo
-      _t.doSetMode('run')
+      _t.doSetMode('edit')
       // 设置默认中心
       _t.doZoom({
         name: 'actualSize'
       })
       // 绑定事件
-      _t.editor.on('canvas:mousedown',_t._canvasMousedown)
+      _t.editor.on('canvas:mousedown', _t._canvasMousedown)
       // 绑定事件
-      _t.editor.on('canvas:mouseup',_t._canvasMouseup)
+      _t.editor.on('canvas:mouseup', _t._canvasMouseup)
       // _t.editor.on('click', _t._editorClick)
-      _t.editor.on('node:click',_t._nodeClick)
-      _t.editor.on('node:mousedown',_t._nodeMousedown)
-      _t.editor.on('node:mouseover',_t._nodeHover)
-      _t.editor.on('node:mouseout',_t._nodeOut)
+      _t.editor.on('node:click', _t._nodeClick)
+      _t.editor.on('node:mousedown', _t._nodeMousedown)
+      _t.editor.on('node:mouseover', _t._nodeHover)
+      _t.editor.on('node:mouseout', _t._nodeOut)
       // _t.editor.on('node:contextmenu', _t._nodeContextmenu)
-      _t.editor.on('edge:mousedown',_t._edgeMousedown)
-      _t.editor.on('editor:getItem',function(data) {
-        _t.$store.commit('editor/currentItem/update',data)
+      _t.editor.on('edge:mousedown', _t._edgeMousedown)
+      _t.editor.on('editor:getItem', function (data) {
+        _t.$store.commit('editor/currentItem/update', data)
       })
-      _t.editor.on('editor:setItem',function(data) {
-        data.forEach((item,index) => {
+      _t.editor.on('editor:setItem', function (data) {
+        data.forEach((item, index) => {
           let node = _t.editor.findById(item.id)
           if (!index) {
             // 更新第一个节点
-            _t.editor.updateItem(node,item.model)
+            _t.editor.updateItem(node, item.model)
           } else {
             // FIXME 更新同组节点，只更新样式部分
-            _t.editor.updateItem(node,{
-              style: data[ 0 ].model.style
+            _t.editor.updateItem(node, {
+              style: data[0].model.style
             })
           }
         })
         _t.editor.paint()
       })
-      _t.editor.on('editor:contextmenu',function(data) {
-        _t.$X.utils.bus.$emit('editor/contextmenu/open',data)
+      _t.editor.on('editor:contextmenu', function (data) {
+        _t.$X.utils.bus.$emit('editor/contextmenu/open', data)
       })
-      _t.editor.on('editor:record',function(from) {
-        console.log('editor:record from',from)
+      _t.editor.on('editor:record', function (from) {
+        console.log('editor:record from', from)
         // 更新操作日志
-        _t.$store.commit('editor/log/update',{
+        _t.$store.commit('editor/log/update', {
           action: 'record',
           data: {
             time: new Date(),
@@ -478,14 +538,14 @@ export default {
       // 绑定unload
       _t.bindUnload()
       // 更新编辑器实例
-      _t.$store.commit('editor/instance/update',_t.editor)
+      _t.$store.commit('editor/instance/update', _t.editor)
     }
     ,
     _canvasMousedown() {
       let _t = this
       _t.doClearAllStates()
       // 更新currentItem
-      _t.$store.commit('editor/currentItem/update',[])
+      _t.$store.commit('editor/currentItem/update', [])
     }
     ,
     _canvasMouseup() {
@@ -496,30 +556,30 @@ export default {
     _editorClick(event) {
     }
     ,
-    _nodeClick: _.debounce(function(event) {
+    _nodeClick: _.debounce(function (event) {
       let _t = this
       const id = event.item._cfg.model && event.item._cfg.model.originId
       this.eventItem = event.item
       if (id) this.getOriginData(id)
-      _t.editor.setItemState(event.item,'active',true)
+      _t.editor.setItemState(event.item, 'active', true)
     }),
     _nodeMousedown(event) {
       let _t = this
       _t.doClearAllStates()
-      _t.editor.setItemState(event.item,'active',true)
+      _t.editor.setItemState(event.item, 'active', true)
     }
     ,
     _nodeHover(event) {
       let _t = this
       // FIXME 当节点未激活时才可设置hover true状态 11
       if (!event.item.hasState('active')) {
-        _t.editor.setItemState(event.item,'hover',true)
+        _t.editor.setItemState(event.item, 'hover', true)
       }
     }
     ,
     _nodeOut(event) {
       let _t = this
-      _t.editor.setItemState(event.item,'hover',false)
+      _t.editor.setItemState(event.item, 'hover', false)
     }
     ,
     _nodeContextmenu(event) {
@@ -529,7 +589,7 @@ export default {
       let _t = this
       _t.doClearAllStates()
       if (event.item && !event.item.destroyed) {
-        _t.editor.setItemState(event.item,'active',!event.item.hasState('active'))
+        _t.editor.setItemState(event.item, 'active', !event.item.hasState('active'))
       }
     }
     ,
@@ -541,17 +601,17 @@ export default {
       }
       // 批量操作时关闭自动重绘，以提升性能
       _t.editor.setAutoPaint(false)
-      _t.editor.getNodes().forEach(function(node) {
-        _t.editor.clearItemStates(node,['active','hover','selected'])
+      _t.editor.getNodes().forEach(function (node) {
+        _t.editor.clearItemStates(node, ['active', 'hover', 'selected'])
       })
-      _t.editor.getEdges().forEach(function(edge) {
-        _t.editor.clearItemStates(edge,['active','hover','selected'])
+      _t.editor.getEdges().forEach(function (edge) {
+        _t.editor.clearItemStates(edge, ['active', 'hover', 'selected'])
       })
       _t.editor.paint()
       _t.editor.setAutoPaint(true)
     }
     ,
-    doZoom(info,position) {
+    doZoom(info, position) {
       let _t = this
       // 缩放率
       let ratio = 1
@@ -562,23 +622,23 @@ export default {
         let width = _t.editor.get('width')
         let height = _t.editor.get('height')
         center = {
-          x: width/2,
-          y: height/2
+          x: width / 2,
+          y: height / 2
         }
       }
       if (info.name === 'zoom') {
-        _t.editor.zoomTo(info.data,center)
-      } else if (['zoomIn','zoomOut'].includes(info.name)) {
+        _t.editor.zoomTo(info.data, center)
+      } else if (['zoomIn', 'zoomOut'].includes(info.name)) {
         let currentRatio = _t.editor.getZoom()
         let step = 0.1
         ratio = info.name === 'zoomOut' ? currentRatio - step : currentRatio + step
         ratio = ratio.toFixed(1)
         // 缩放视窗窗口到一个固定比例
-        _t.editor.zoomTo(ratio,center)
+        _t.editor.zoomTo(ratio, center)
       } else if (info.name === 'actualSize') {
         ratio = 1
         // _t.editor.zoomTo(ratio)
-        _t.editor.zoomTo(ratio,center)
+        _t.editor.zoomTo(ratio, center)
       }
     }
     ,
@@ -607,26 +667,26 @@ export default {
         shapeControl: info.shapeControl
       }
       // 广播事件，通过自定义交互 node-control 添加节点
-      _t.editor.emit('editor:addNode',node)
+      _t.editor.emit('editor:addNode', node)
     }
     ,
-    doEditorClick: _.debounce(function(info) {
+    doEditorClick: _.debounce(function (info) {
       // 左边和右边联动
       const _t = this
       const id = JSON.parse(info.data).id
       _t.getOriginData(id)
-    },300),
+    }, 300),
     getOriginData(id) {
       const originDataObj = JSON.parse(localStorage.getItem('originDataObj' + String(id)))
       if (originDataObj) {
-        this.originDataObj = { ...originDataObj }
+        this.originDataObj = {...originDataObj}
       } else {
         getSvgById(id).then(res => {
           this.originDataObj = {
             originData: res.data,
             originId: id
           }
-          localStorage.setItem('originDataObj' + String(id),JSON.stringify({
+          localStorage.setItem('originDataObj' + String(id), JSON.stringify({
             originData: res.data,
             originId: id
           }))
@@ -649,7 +709,7 @@ export default {
         }
         return item
       })
-      _t.$store.commit('editor/toolList/update',toolList)
+      _t.$store.commit('editor/toolList/update', toolList)
     }
     ,
     handleToolTrigger(info) {
@@ -661,14 +721,14 @@ export default {
         case 'redo':
         case 'clearLog':
           // 更新操作日志
-          _t.$store.commit('editor/log/update',{
+          _t.$store.commit('editor/log/update', {
             action: info.name
           })
-          if (['undo','redo'].includes(info.name)) {
-            _t.$nextTick(function() {
+          if (['undo', 'redo'].includes(info.name)) {
+            _t.$nextTick(function () {
               if (_t.log.list.length) {
                 if (_t.log.current === 0) {
-                  let data = _t.log.list[ 0 ]
+                  let data = _t.log.list[0]
                   if (data === null) {
                     // 清除
                     _t.editor.clear()
@@ -683,7 +743,7 @@ export default {
                     })
                   }
                 } else {
-                  let data = _t.log.list[ _t.log.current ]
+                  let data = _t.log.list[_t.log.current]
                   // 渲染
                   _t.editor.read(data.content)
                   _t.editor.paint()
@@ -695,7 +755,7 @@ export default {
               }
             })
             // 更新currentItem
-            _t.$store.commit('editor/currentItem/update',[])
+            _t.$store.commit('editor/currentItem/update', [])
           }
           break
         case 'copy':
@@ -713,18 +773,18 @@ export default {
             let data = _t.clipboard.data
             _t.clipboard.count++
             if (data.length) {
-              data.forEach((item,index) => {
+              data.forEach((item, index) => {
                 let model = item.model
                 // 计算坐标，添加一定偏移量，防止重叠
-                let x = model.x + 10*_t.clipboard.count
-                let y = model.y + 10*_t.clipboard.count
+                let x = model.x + 10 * _t.clipboard.count
+                let y = model.y + 10 * _t.clipboard.count
                 // 如果通过右键菜单触发的，则获取触发菜单时的canvas坐标
                 if (info && info.context === 'ContextMenu' && info.data) {
                   if (info.data.hasOwnProperty('canvasX')) {
-                    x = model.x + info.data.canvasX - data[ 0 ].model.x
+                    x = model.x + info.data.canvasX - data[0].model.x
                   }
                   if (info.data.hasOwnProperty('canvasY')) {
-                    y = model.y + info.data.canvasY - data[ 0 ].model.y
+                    y = model.y + info.data.canvasY - data[0].model.y
                   }
                 }
                 let node = {
@@ -734,7 +794,7 @@ export default {
                   x,
                   y
                 }
-                _t.editor.addItem('node',node)
+                _t.editor.addItem('node', node)
               })
             }
           })()
@@ -754,7 +814,7 @@ export default {
             }
           })
           // 更新currentItem
-          _t.$store.commit('editor/currentItem/update',[])
+          _t.$store.commit('editor/currentItem/update', [])
           break
         case 'zoom':
         case 'zoomIn':
@@ -781,7 +841,7 @@ export default {
             previewData.content = _t.editor.save()
           }
           // 显示预览弹窗
-          _t.$X.utils.bus.$emit('editor/previewModel/open',previewData)
+          _t.$X.utils.bus.$emit('editor/previewModel/open', previewData)
           break
         case 'edit':
           _t.doSetMode(info.data)
@@ -791,8 +851,8 @@ export default {
           _t.editor.getNodes().forEach(node => {
             if (node.hasState('active')) {
               isRecord = true
-              let { style } = node.getModel()
-              _t.editor.updateItem(node,{
+              let {style} = node.getModel()
+              _t.editor.updateItem(node, {
                 style: {
                   ...style,
                   fill: info.data
@@ -806,8 +866,8 @@ export default {
           _t.editor.getEdges().forEach(edge => {
             if (edge.hasState('active')) {
               isRecord = true
-              let { style } = edge.getModel()
-              _t.editor.updateItem(edge,{
+              let {style} = edge.getModel()
+              _t.editor.updateItem(edge, {
                 style: {
                   ...style,
                   stroke: info.data
@@ -818,8 +878,8 @@ export default {
           _t.editor.getNodes().forEach(node => {
             if (node.hasState('active')) {
               isRecord = true
-              let { style } = node.getModel()
-              _t.editor.updateItem(node,{
+              let {style} = node.getModel()
+              _t.editor.updateItem(node, {
                 style: {
                   ...style,
                   stroke: info.data
@@ -833,8 +893,8 @@ export default {
           _t.editor.getEdges().forEach(edge => {
             if (edge.hasState('active')) {
               isRecord = true
-              let { style } = edge.getModel()
-              _t.editor.updateItem(edge,{
+              let {style} = edge.getModel()
+              _t.editor.updateItem(edge, {
                 style: {
                   ...style,
                   lineWidth: info.data
@@ -845,8 +905,8 @@ export default {
           _t.editor.getNodes().forEach(node => {
             if (node.hasState('active')) {
               isRecord = true
-              let { style } = node.getModel()
-              _t.editor.updateItem(node,{
+              let {style} = node.getModel()
+              _t.editor.updateItem(node, {
                 style: {
                   ...style,
                   lineWidth: info.data
@@ -861,11 +921,11 @@ export default {
           _t.editor.getEdges().forEach(edge => {
             if (edge.hasState('active')) {
               isRecord = true
-              let { style } = edge.getModel()
-              _t.editor.updateItem(edge,{
+              let {style} = edge.getModel()
+              _t.editor.updateItem(edge, {
                 style: {
                   ...style,
-                  ...edgeConfig.type[ info.data ]
+                  ...edgeConfig.type[info.data]
                 }
               })
             }
@@ -873,11 +933,11 @@ export default {
           _t.editor.getNodes().forEach(node => {
             if (node.hasState('active')) {
               isRecord = true
-              let { style } = node.getModel()
-              _t.editor.updateItem(node,{
+              let {style} = node.getModel()
+              _t.editor.updateItem(node, {
                 style: {
                   ...style,
-                  ...edgeConfig.type[ info.data ]
+                  ...edgeConfig.type[info.data]
                 }
               })
             }
@@ -888,7 +948,7 @@ export default {
           _t.editor.getEdges().forEach(edge => {
             if (edge.hasState('active')) {
               isRecord = true
-              _t.editor.updateItem(edge,{
+              _t.editor.updateItem(edge, {
                 shape: info.data
               })
               _t.editor.refreshItem(edge)
@@ -897,16 +957,16 @@ export default {
           break
         case 'startArrow':
         case 'endArrow':
-          _t.editor.$X[ info.name ] = info.data
+          _t.editor.$X[info.name] = info.data
           // 根据端点类型更新边
           _t.editor.getEdges().forEach(edge => {
             if (edge.hasState('active')) {
               isRecord = true
-              let { style } = edge.getModel()
-              _t.editor.updateItem(edge,{
+              let {style} = edge.getModel()
+              _t.editor.updateItem(edge, {
                 style: {
                   ...style,
-                  [ info.name ]: info.data
+                  [info.name]: info.data
                 }
               })
             }
@@ -917,9 +977,9 @@ export default {
             title: _t.$t('L10200'),
             // 确认清空画布？
             content: _t.$t('L10201'),
-            onOk: function() {
+            onOk: function () {
               // 更新操作日志
-              _t.$store.commit('editor/log/update',{
+              _t.$store.commit('editor/log/update', {
                 action: 'clear'
               })
               _t.editor.clear()
@@ -927,7 +987,7 @@ export default {
             }
           })
           // 更新currentItem
-          _t.$store.commit('editor/currentItem/update',[])
+          _t.$store.commit('editor/currentItem/update', [])
           break
         case 'toFront':
         case 'toBack':
@@ -936,9 +996,9 @@ export default {
               if (data.hasOwnProperty('id') && data.id) {
                 isRecord = true
                 let item = _t.editor.findById(data.id)
-                if (item && item[ info.name ]) {
+                if (item && item[info.name]) {
                   // 执行操作
-                  item[ info.name ]()
+                  item[info.name]()
                   _t.editor.paint()
                 }
               }
@@ -955,28 +1015,28 @@ export default {
             title: _t.$t('L10200'),
             // 上传JSON数据将覆盖当前画布，确认上传？
             content: _t.$t('L10206'),
-            onOk: function() {
+            onOk: function () {
               // 打开文件选择窗口
               let input = document.createElement('input')
               input.type = 'file'
               // 限定文件类型
               input.accept = '.json'
               input.click()
-              input.onchange = function() {
-                let file = input.files[ 0 ]
+              input.onchange = function () {
+                let file = input.files[0]
                 // FileReader实例
                 let reader = new FileReader()
                 // 读取文件
-                reader.readAsText(file,'UTF-8')
+                reader.readAsText(file, 'UTF-8')
                 // 处理数据
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                   try {
                     let fileString = event.target.result
                     let fileJson = JSON.parse(fileString)
                     // 清空画布
                     _t.editor.clear()
                     // 更新currentItem
-                    _t.$store.commit('editor/currentItem/update',[])
+                    _t.$store.commit('editor/currentItem/update', [])
                     // 设置数据
                     _t.editor.data(fileJson)
                     // 渲染
@@ -989,13 +1049,13 @@ export default {
                       keyShape.rotate(radian)
                       let group = _t.editor.get('group')
                       // 更新shapeControl
-                      utils.shapeControl.rotate(model,group,radian)
+                      utils.shapeControl.rotate(model, group, radian)
                       // 更新锚点
-                      utils.anchor.rotate(model,group,radian)
+                      utils.anchor.rotate(model, group, radian)
                     })
                     // 加载数据后保存记录
                     // 更新操作日志
-                    _t.$store.commit('editor/log/update',{
+                    _t.$store.commit('editor/log/update', {
                       action: 'loadData',
                       data: {
                         time: new Date(),
@@ -1005,7 +1065,7 @@ export default {
                   } catch (e) {
                     // 提示
                     _t.$Message.error(_t.$t('L10207'))
-                    console.error('Editor Error:: upload JSON failed!',e)
+                    console.error('Editor Error:: upload JSON failed!', e)
                   }
                 }
               }
@@ -1013,13 +1073,13 @@ export default {
           })
           break
         case 'download':
-          let fileName = _t.$X.config.system.name + '_' + _t.$X.utils.filters.formatDate(new Date(),'YYYYMMDDhhmmss')
+          let fileName = _t.$X.config.system.name + '_' + _t.$X.utils.filters.formatDate(new Date(), 'YYYYMMDDhhmmss')
           if (info.data === 'image') {
             _t.editor.downloadImage(fileName)
           } else if (info.data === 'json') {
             let content = _t.editor.save()
             content = JSON.stringify(content)
-            let blob = new Blob([content],{
+            let blob = new Blob([content], {
               type: 'application/json;charset=UTF-8'
             })
             let url = URL.createObjectURL(blob)
@@ -1034,44 +1094,44 @@ export default {
             /!* create a new blank workbook *!/
             let wb = XLSX.utils.book_new();
             let dataList = []
-            _t.editor.getNodes().forEach((node,index) => {
+            _t.editor.getNodes().forEach((node, index) => {
               const model = node.getModel()
               if (model.params) {
                 dataList.push(model.params)
               }
             })
             if (!dataList.length) return
-            const excelData = _.groupBy(dataList,'originId')
+            const excelData = _.groupBy(dataList, 'originId')
             Object.entries(excelData).forEach(sheet => {
-              const sheetData = sheet[ 1 ]
-              const sheetName = sheetData[ 0 ].form.modelName
-              let s = sheetData.map((row,rowIndex) => {
+              const sheetData = sheet[1]
+              const sheetName = sheetData[0].form.modelName
+              let s = sheetData.map((row, rowIndex) => {
                 let obj = {}
                 row.paramList.map(cell => {
                   const name = cell.name
                   obj = {
-                    'uid': rowIndex,...obj,
-                    [ name ]: cell.defaultValue
+                    'uid': rowIndex, ...obj,
+                    [name]: cell.defaultValue
                   }
                 });
                 return obj
               })
               console.log(s)
-              XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(s),sheetName);
+              XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(s), sheetName);
             })
             // let sheetData = [{department: "行政部", count: 2}, {department: "前端部", count: 2}];
             const workbookBlob = this.workbook2blob(wb);
-            this.openDownloadDialog(workbookBlob,`GUI.xlsx`);
+            this.openDownloadDialog(workbookBlob, `GUI.xlsx`);
           }
           break
         case 'selectAll':
           let groupId = G6.Util.uniqueId()
           _t.editor.getNodes().forEach(node => {
             // 更新节点
-            _t.editor.updateItem(node,{
+            _t.editor.updateItem(node, {
               groupId
             })
-            _t.editor.setItemState(node,'active',true)
+            _t.editor.setItemState(node, 'active', true)
           })
           break
         case 'canvasBackground':
@@ -1086,20 +1146,20 @@ export default {
               // 限定文件类型
               input.accept = 'image/png, image/jpeg, image/jpg'
               input.click()
-              input.onchange = function() {
-                let file = input.files[ 0 ]
+              input.onchange = function () {
+                let file = input.files[0]
                 // FileReader实例
                 let reader = new FileReader()
                 // 读取图片
                 if (file) {
                   reader.readAsDataURL(file)
                   // 处理数据
-                  reader.onload = function(event) {
+                  reader.onload = function (event) {
                     try {
                       let imgFile = reader.result
-                      _t.editor.emit('background:update',imgFile)
+                      _t.editor.emit('background:update', imgFile)
                     } catch (e) {
-                      console.error('Editor Error:: update background failed!',e)
+                      console.error('Editor Error:: update background failed!', e)
                     }
                   }
                 }
@@ -1108,7 +1168,7 @@ export default {
           }
           break
         case 'canvasBackgroundColor':
-          _t.editor.emit('background:set',info.data)
+          _t.editor.emit('background:set', info.data)
           break
         case 'up':
         case 'down':
@@ -1136,14 +1196,14 @@ export default {
                   position.x++
                   break
               }
-              _t.editor.updateItem(node,position)
+              _t.editor.updateItem(node, position)
             }
           })
           break
       }
       if (isRecord) {
         // 记录操作日志
-        _t.editor.emit('editor:record','handleToolTrigger')
+        _t.editor.emit('editor:record', 'handleToolTrigger')
       }
     }
     ,
@@ -1155,7 +1215,7 @@ export default {
       }
     }
     ,
-    openDownloadDialog(blob,fileName) {
+    openDownloadDialog(blob, fileName) {
       if (typeof blob == "object" && blob instanceof Blob) {
         blob = URL.createObjectURL(blob); // 创建blob地址
       }
@@ -1168,7 +1228,7 @@ export default {
       //   移动端
       else {
         event = document.createEvent("MouseEvents");
-        event.initMouseEvent("click",true,false,window,0,0,0,0,0,false,false,false,false,0,null);
+        event.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
       }
       aLink.dispatchEvent(event);
     }
@@ -1182,17 +1242,17 @@ export default {
         bookSST: false,
         type: "binary"
       };
-      var wbout = XLSX.write(workbook,wopts);
+      var wbout = XLSX.write(workbook, wopts);
 
       // 将字符串转ArrayBuffer
       function s2ab(s) {
         var buf = new ArrayBuffer(s.length);
         var view = new Uint8Array(buf);
-        for (var i = 0; i != s.length; ++i) view[ i ] = s.charCodeAt(i) & 0xff;
+        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
         return buf;
       }
 
-      var blob = new Blob([s2ab(wbout)],{
+      var blob = new Blob([s2ab(wbout)], {
         type: "application/octet-stream"
       });
       return blob;
@@ -1204,7 +1264,7 @@ export default {
       let _t = this
       _t.toolList.forEach(item => {
         if (item.enable && item.shortcuts) {
-          Mousetrap.bind(item.shortcuts,function(e) {
+          Mousetrap.bind(item.shortcuts, function (e) {
             if (e.preventDefault) {
               e.preventDefault()
             } else {
@@ -1220,7 +1280,7 @@ export default {
         }
       })
       // 绑定按键事件
-      document.addEventListener('keyup',function() {
+      document.addEventListener('keyup', function () {
         _t.$X.utils.bus.$emit('editor/contextmenu/close')
       })
     }
@@ -1244,20 +1304,20 @@ export default {
     _t.initInfo()
     _t.$nextTick(_t.init)
 
-    _t.$X.utils.bus.$on('editor/add/node',_t.doAddNode)
-    _t.$X.utils.bus.$on('editor/click',function(data) {
+    _t.$X.utils.bus.$on('editor/add/node', _t.doAddNode)
+    _t.$X.utils.bus.$on('editor/click', function (data) {
       _t.doEditorClick(data)
     })
-    _t.$X.utils.bus.$on('editor/tool/trigger',_t.handleToolTrigger)
-    _t.$X.utils.bus.$on('editor/currentItem/update',function(data) {
-      _t.editor.emit('editor:setItem',data)
+    _t.$X.utils.bus.$on('editor/tool/trigger', _t.handleToolTrigger)
+    _t.$X.utils.bus.$on('editor/currentItem/update', function (data) {
+      _t.editor.emit('editor:setItem', data)
     })
 
 
   },
   mounted() {
 
-    setTimeout(function(){
+    setTimeout(function () {
       this.drawChart();
     }.bind(this))
   }
