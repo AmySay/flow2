@@ -33,36 +33,17 @@ export default function (G6, devices) {
             height = size[1]
             const x = 0 - width / 2
             const y = 0 - height / 2
-            const color = cfg.color || Global.defaultNode.color
-            const style = Util.mix({}, Global.defaultNode.style, {
-              // 节点的位置在上层确定，所以这里仅使用相对位置即可
+            const style = Util.mix({}, {
               x,
               y,
               width,
               height,
-              stroke: color
+              img: device.imgUrl,
+              anchorPoints:$X.$X.iconStyle[device.name].anchorPoints ,
+              shapeControl: $X.$X.shapeControl,
             }, cfg.style)
             return style
           },
-          options: Util.mix({}, {
-            icon: device.imgUrl,
-            iconStyle: {
-              width: width / 2,
-              height: height / 2,
-              left: -width / 4,
-              top: -height / 4
-            },
-            style: {
-              fill: '#f9f9f9',
-              stroke: '#bbb',
-              cursor: 'default'
-            },
-            stateStyles: {
-              selected: {
-                fill: '#eee'
-              }
-            }
-          })
         }
       }
     })

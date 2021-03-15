@@ -270,13 +270,17 @@
         })
         _t.editor.on('editor:setItem', function (data) {
           data.forEach((item, index) => {
-            let node = _t.editor.findById(item.id)
+            const model = item.model
+            // if (item.type === 'edge') {
+            //   TODO 处理箭头
+            // }
+            const shapeItem = _t.editor.findById(item.id)
             if (!index) {
               // 更新第一个节点
-              _t.editor.updateItem(node, item.model)
+              _t.editor.updateItem(shapeItem, model)
             } else {
               // FIXME 更新同组节点，只更新样式部分
-              _t.editor.updateItem(node, {
+              _t.editor.updateItem(shapeItem, {
                 style: data[0].model.style
               })
             }

@@ -682,7 +682,8 @@ export default {
       createNode (event) {
         const _t = this
         if (_t.dragNode.dottedNode && _t.info.node) {
-          const { width, height, minWidth, minHeight, label, type } = _t.info.node
+          const { width, height, label, type } = _t.info.node
+          console.log(_t.info.node,'_t.info.node')
           const node = {
             ..._t.info.node,
             id: G6Util.uniqueId(),
@@ -691,17 +692,7 @@ export default {
             x: event.x,
             y: event.y,
             size: [width, height],
-            minWidth: minWidth,
-            minHeight: minHeight,
             label: label,
-            style: {
-              fill: _t.graph.$D.fill,
-              fillOpacity: _t.graph.$D.fillOpacity,
-              stroke: _t.graph.$D.lineColor,
-              strokeOpacity: _t.graph.$D.strokeOpacity,
-              lineWidth: _t.graph.$D.lineWidth,
-              ...config.edge.type[_t.graph.$D.lineDash]
-            }
           }
           _t.graph.addItem('node', node)
         }
