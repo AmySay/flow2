@@ -11,7 +11,7 @@ console.log(post)
 */
 export function settingparameters (params) {
   return post({
-    url: 'settingparameters',
+    url: 'pyapi/settingparameters',
     params
   })
 }
@@ -26,7 +26,7 @@ export function settingparameters (params) {
  */
 export function startrunning (params) {
   return post({
-    url: 'startrunning',
+    url: 'pyapi/startrunning',
     params
   })
 }
@@ -42,7 +42,7 @@ export function startrunning (params) {
  */
 export function regtogglers (params) {
   return post({
-    url: 'regtogglers',
+    url: 'pyapi/regtogglers',
     params
   })
 }
@@ -58,8 +58,7 @@ export function regtogglers (params) {
  */
 export function settoggleraction (params) {
   return post({
-    url: 'settoggleraction',
-
+    url: 'pyapi/settoggleraction',
     params
   })
 }
@@ -75,8 +74,7 @@ export function settoggleraction (params) {
  */
 export function getelementparas (params) {
   return post({
-    url: 'getelementparas',
-
+    url: 'pyapi/getelementparas',
     params
   })
 }

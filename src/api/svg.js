@@ -3,14 +3,14 @@ import {get} from '../global/utils/request'
 
 export function getDevice () {
   return get({
-    url: 'device',
+    url: 'svg/device',
     params: ''
   })
 }
 
 export function getSvgById (id) {
   return get({
-    url: 'model',
+    url: 'svg/model',
     params: { id }
   })
 }

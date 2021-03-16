@@ -1,10 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import QS from 'qs';
-// create an axios instance
 const service = axios.create({
-  // baseURL: 'http://qingpu.c2py.com/photinia-api/', // url = base url + request url
-  baseURL: 'http://testflight.jokco.com/pyapi/', // url = base url + request url
+  baseURL: 'http://testflight.jokco.com/', // url = base url + request url
   timeout: 5000, // request timeout
 })
 
