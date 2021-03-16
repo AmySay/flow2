@@ -44,7 +44,7 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
+export  default  service
 /**
  * get方法，对应get请求
  * @param {String} url [请求的url地址]

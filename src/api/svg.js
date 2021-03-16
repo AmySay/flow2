@@ -3,14 +3,14 @@ import {get} from '../global/utils/request'
 
 export function getDevice () {
   return get({
-    url: 'svg/device',
+    url: 'photinia-api/svg/device',
     params: ''
   })
 }
 
 export function getSvgById (id) {
   return get({
-    url: 'svg/model',
+    url: 'photinia-api/svg/model',
     params: { id }
   })
 }
