@@ -23,7 +23,7 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
-    if (res.ret !== 0) {
+    if (!(res.ret === 'SUCCESS' || res.ret === 0)) {
       Message({
         message: res.message || '请求接口失败！',
         type: 'error',
