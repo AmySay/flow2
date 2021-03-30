@@ -403,8 +403,6 @@ export default {
           }
           let width = model.width
           let height = model.height
-          // 设置宽高比
-          // const scale = width/ height
           if (position) {
             // 参照点，及当前controller的对角点
             // 参照点位置信息
@@ -424,22 +422,19 @@ export default {
             if (_t.shapeControlPoint.isProportional) {
               attrs.size[0] = attrs.size[1] = Math.abs(referencePoint.x - event.x)
             } else if (position.x > 0 && position.x < 1 && (position.y === 0 || position.y === 1)) {
-              console.log('2')
+              // 纵向
               attrs.x = originNodeModel.x
-              attrs.size[0] = originNodeModel.size[0]
+              attrs.size[0] = width/ height *  Math.abs(referencePoint.y - event.y)
               attrs.size[1] = Math.abs(referencePoint.y - event.y)
             } else if (position.y > 0 && position.y < 1 && (position.x === 0 || position.x === 1)) {
-              console.log('3')
+              // 横向
               attrs.y = originNodeModel.y
               attrs.size[0] = Math.abs(referencePoint.x - event.x)
               attrs.size[1] = originNodeModel.size[1]
             } else {
-              console.log('4')
+              // 对角线
               attrs.size[0] = Math.abs(referencePoint.x - event.x)
               attrs.size[1] = Math.abs(referencePoint.y - event.y)
-              // const oWidth = Math.abs(referencePoint.y - event.y) * scale
-              // attrs.size[1] = Math.abs(referencePoint.y - event.y)
-              // attrs.size[0] = oWidth
             }
             // 处理宽高最小值
             if (attrs.size[0] < originNodeModel.minWidth || attrs.size[1] < originNodeModel.minHeight) {
@@ -490,6 +485,8 @@ export default {
           let attrs = _t.info.attrs
           // 当前节点容器
           let group = _t.info.node.getContainer()
+          // 如果是母线 添加多个锚点
+          // let anchorPoints = _t.info.node.getAnchorPoints()
           // 更新锚点
           utils.anchor.update({
             ..._t.info.node.getModel(),

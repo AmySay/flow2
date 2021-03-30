@@ -13,7 +13,7 @@ export default {
     const style = this.getShapeStyle(cfg)
     const shape = group.addShape(shapeType, {
       attrs: style,
-      name: 'XFCNodeKeyShape',
+      name:  this.name,
       draggable: true
     })
     this.shape = shape
@@ -41,6 +41,7 @@ export default {
         draggable: true,
         name: 'image-shape',
       })
+      this.group = group
     }
   },
   ShowObjProperty1(Obj) {
@@ -81,14 +82,6 @@ export default {
     })
     // 更新图形文本
     // this.updateLabel(cfg, item)
-  },
-  getAnchorPoints(cfg) {
-    return [
-      [0.5, 0], // top
-      [1, 0.5], // right
-      [0.5, 1], // bottom
-      [0, 0.5] // left
-    ]
   },
   setState(name, value, item) {
     // 设置锚点状态

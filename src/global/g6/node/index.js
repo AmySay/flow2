@@ -26,6 +26,7 @@ export default function (G6, devices) {
         extendName: 'base-node',
         options: {
           ...base,
+          name: device.name,
           shapeType: 'image',
           getShapeStyle(cfg) {
             const size = this.getSize(cfg)
