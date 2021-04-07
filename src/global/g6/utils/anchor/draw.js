@@ -22,23 +22,23 @@ export default function(cfg,group) {
       anchorPoints.push([k,0],[k,1])
     }
   }
-    /*anchorPoints.push([0,0],
-      [0.25,0],
-      [0.5,0],
-      [0.75,0],
-      [1,0],
-      [1,0.25],
-      [1,0.5],
-      [1,0.75],
-      [1,1],
-      [0.75,1],
-      [0.5,1],
-      [0.25,1],
-      [0,1],
-      [0,0.75],
-      [0,0.5],
-      [0,0.25])
-  }*/
+  /*anchorPoints.push([0,0],
+   [0.25,0],
+   [0.5,0],
+   [0.75,0],
+   [1,0],
+   [1,0.25],
+   [1,0.5],
+   [1,0.75],
+   [1,1],
+   [0.75,1],
+   [0.5,1],
+   [0.25,1],
+   [0,1],
+   [0,0.75],
+   [0,0.5],
+   [0,0.25])
+   }*/
   if (anchorPoints && anchorPoints.length) {
     for (let i = 0,len = anchorPoints.length; i < len; i++) {
       let anchorX
@@ -110,3 +110,7 @@ export default function(cfg,group) {
     }
   }
 }
+
+
+
+
