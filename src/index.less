@@ -1,0 +1,173 @@
+
+.index-style {
+  width: 100%;
+  height: calc(~"100% - 4px");
+  // width:1920px;
+  // height:1082px;
+  z-index: 1;
+  .path-svg{
+    width:100%;
+    height:100%;
+    .zoom-container{
+      width:100%;
+      height:100%;
+    }
+    .g-rect-path{
+      fill: none;
+      stroke-width:2;
+      stroke:#d3dce6;
+      stroke-linejoin:round;
+      stroke-linecap:round;
+    }
+
+    .g-rect-fill{
+      fill: none;
+      stroke-width:2;
+      stroke:#f00;
+      stroke-linejoin:round;
+      stroke-linecap:round;
+      stroke-dasharray: 0, 10;
+      stroke-dashoffset: 0;
+      animation: lineMove 2s ease-out infinite;
+    }
+
+    @keyframes lineMove {
+      0%{
+        stroke-dasharray: 0, 100%;
+      }
+      100%{
+        stroke-dasharray: 100%, 100%;
+      }
+    }
+  }
+
+
+}
+.rect{
+  fill:transparent;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+.switch{
+  fill:transparent;
+  .open{
+    fill:#f00;
+  }
+  .close{
+    fill:#0f0;
+  }
+}
+
+
+.st0 {
+  fill: #FFFFFF;
+}
+
+.st1 {
+  fill: none;
+  stroke: #B94842;
+  stroke-width: 0.7087;
+  // stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+}
+
+.st2 {
+  fill: none;
+  stroke: #C0C0C0;
+  stroke-width: 0.7087;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+}
+
+.st3 {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  fill: #B94842;
+}
+
+.st4 {
+  fill: #B94842;
+}
+
+.st5 {
+  font-family: 'LiSu';
+}
+
+.st6 {
+  font-size: 2.6703px;
+}
+
+.st7 {
+  font-family: 'AdobeSongStd-Light-GBpc-EUC-H';
+}
+
+.st8 {
+  font-size: 2.1458px;
+}
+
+.st9 {
+  font-size: 3.2188px;
+}
+
+.st10 {
+  fill: none;
+  stroke: #FFCC00;
+  stroke-width: 0.7087;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+}
+
+.st11 {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  fill: #FFCC00;
+}
+
+.st12 {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  fill: #D5C8D1;
+}
+
+.st13 {
+  font-family: 'SimSun';
+}
+
+.st14 {
+  font-size: 1.3415px;
+  fill:#ffffff;
+}
+
+.st15 {
+  fill: #C0C0C0;
+}
+
+.st16 {
+  fill: #FF0000;
+}
+
+.st17 {
+  font-size: 4.0245px;
+}
+
+.st18 {
+  fill: #008000;
+}
+
+.st19 {
+  font-size: 1.0732px;
+}
+
+.st20 {
+  fill: #00FF00;
+}
+
+.st21 {
+  font-size: 1.7842px;
+}

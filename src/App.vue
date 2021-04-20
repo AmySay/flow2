@@ -4,18 +4,26 @@
 * App
 */
 
-<style scoped lang="less" rel="stylesheet/less"></style>
+<style scoped lang="less">
+  @import "./index.less";
+</style>
+
 
 <template>
-  <Editor></Editor>
+  <div id = ''>
+
+
+
+  </div>
 </template>
 
 <script>
-  import Editor from './components/Editor/Index'
+  import d3 from 'd3';
+  import renderApp from './renderApp2'
+  console.log(renderApp)
   export default {
     name: 'App',
     components: {
-      Editor
     },
     created () {
       // 阻止浏览器默认右键菜单

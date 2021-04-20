@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 const service = axios.create({
-  baseURL: 'http://testflight.jokco.com/', // url = base url + request url
+  baseURL: 'http://testflight.jokco.com/eFileAnalysis/yy/', // url = base url + request url
   timeout: 5000, // request timeout
 })
 
