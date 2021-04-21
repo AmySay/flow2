@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 const service = axios.create({
-  baseURL: 'http://testflight.jokco.com/eFileAnalysis/yy/', // url = base url + request url
+  baseURL: 'http://yuyao.jokco.com/eFileAnalysis/yy/', // url = base url + request url
+  // baseURL: 'http://testflight.jokco.com/eFileAnalysis/yy/', // url = base url + request url
+  // baseURL: '/api', // url = base url + request url
   timeout: 5000, // request timeout
 })
 
@@ -21,9 +23,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-
     // if the custom code is not 20000, it is judged as an error.
-    if (!(res.ret === 'SUCCESS' || res.ret === 0)) {
+    if (res.code !== 'SUCCESS') {
       Message({
         message: res.message || '请求接口失败！',
         type: 'error',

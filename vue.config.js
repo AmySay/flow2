@@ -17,18 +17,18 @@ module.exports = {
   assetsDir: '',
   productionSourceMap: false,
   // 开发环境
-  devServer: {
+  /*devServer: {
     // 代理设置
     proxy: {
       '/api': {
-        target: 'http://testflight.jokco.com/pyapi/',
+        target: 'http://testflight.jokco.com/eFileAnalysis/yy',
         changeOrigin: true,
         pathRewrite:{  // 路径重写，
           '^/api': ''  // 替换target中的请求地址，也就是说/api=/target，请求target这个地址的时候直接写成/api即可。
         }
       }
     }
-  },
+  },*/
   css: {
     loaderOptions: {
       less: {

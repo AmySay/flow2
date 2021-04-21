@@ -4,19 +4,18 @@
 * App
 */
 
-<style scoped lang="less">
+<style lang="less">
 @import "./index.less";
 </style>
 <template>
 
   <div class="index-style">
-    <svgList></svgList>
+    <svgList @showEventModal = 'handleShowEventModal'></svgList>
     <el-dialog
       title="新增线路故障"
       :visible.sync="showEventModal"
       width="800"
       :before-close="() => {showEventModal = false}">
-
 
       <el-form ref="form" :model="form" label-width="150px">
         <el-form-item label="故障线路:">
@@ -73,16 +72,20 @@ export default {
     }
   },
   methods: {
-
+    handleShowEventModal({ lineName, showEventModal}){
+      this.form.line_key = lineName
+      this.showEventModal = showEventModal
+    },
     handleSubmit(values){
       this.$refs.form.validate(valid => {
         if (!valid) return
         console.log(this.form)
         addLineEvent({...this.form}).then(res => {
           this.$message.success('新增线路故障信息成功');
-        }).catch(() => {
-          this.$message.error('新增线路故障信息失败');
         })
+          /*.catch(() => {
+          this.$message.error('新增线路故障信息失败');
+        })*/
       })
     },
   },

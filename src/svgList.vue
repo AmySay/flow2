@@ -35,22 +35,23 @@ export default {
       const self = this;
       let rectDoms = document.getElementsByClassName('rect');
       for(let i = 0;i<rectDoms.length;i++){
-        rectDoms[i] && rectDoms[i].removeEventListener('click',self.showAddEventModal);
+        rectDoms[i] && rectDoms[i].removeEventListener('click',(e) => {self.showAddEventModal(e)});
       }
     },
     addRectListenner(){
       let rectDoms = document.getElementsByClassName('rect');
       const self = this;
       for(let i = 0;i<rectDoms.length;i++){
-        rectDoms[i] && rectDoms[i].addEventListener('click',self.showAddEventModal);
+        rectDoms[i] && rectDoms[i].addEventListener('click',(e) => {self.showAddEventModal(e)});
       }
     },
     getSwitchList(){
       getSwitchList().then(res => {
        this.switchList= (res.data || {}).data || []
-      }).catch(() => {
-        this.$message.error('获取数据失败');
       })
+        /*.catch(() => {
+        this.$message.error('获取数据失败');
+      })*/
     },
     toggleSwitch(switchId){
       toggleSwitch({
@@ -59,14 +60,15 @@ export default {
       }).then(res => {
         this.$message.success('更新开关状态成功');
         this.getSwitchList();
-      }).catch((e) => {
-        this.$message.error(e.msg || '更新开关状态失败');
       })
+        /*.catch((e) => {
+        this.$message.error(e.msg || '更新开关状态失败');
+      })*/
     },
 
     _rescale(e) {
-      console.log(e)
-      console.log(d3)
+      // console.log(e)
+      // console.log(d3)
       let scale = e.transform.k;
       let trans = [e.transform.x,e.transform.y];
       this.trans = trans;
@@ -78,8 +80,10 @@ export default {
     },
     showAddEventModal(e){
       let lineName = e.target.getAttribute('data-line');
-      this.showEventModal= true
-      this.lineName= lineName
+      this.$emit('showEventModal',{
+        lineName,
+        showEventModal:true
+      })
     },
   }
 }
