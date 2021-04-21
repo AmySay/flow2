@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
-import i18n from './i18n'
 import * as Cookies from 'js-cookie'
 import './registerServiceWorker'
 import ElementUI from 'element-ui'
@@ -10,7 +9,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 import utils from './global/utils'
 import components from './global/components'
 import config from './config'
-import './assets/styles/main.less'
 
 import XHighlight from 'x-highlight'
 import 'x-highlight/dist/css/XHighlight.css'
@@ -32,17 +30,14 @@ Vue.prototype.$X = {
   config,
   Cookies
 }
-// i18n实例
-const i18nInstance = i18n(Vue, 'zh-CN')
 // 注册全局组件
 Vue.use(components)
-Vue.use(ElementUI, { size: 'small' })
+Vue.use(ElementUI, { size: 'mini' })
 Vue.use(XHighlight)
 // 注册指令
 Vue.use(vClickOutside)
 
 new Vue({
-  i18n: i18nInstance,
   store,
   render: h => h(App)
 }).$mount('#app')

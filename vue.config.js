@@ -3,7 +3,7 @@
  *
  * cli 配置文件
  *
- * 文档：https://cli.vuejs.org/zh/config/
+ * 文档：npm install babel-core babel-loader babel-plugin-transform-runtime -D
  */
 
 const webpack = require('webpack')
