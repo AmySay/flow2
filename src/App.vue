@@ -31,14 +31,14 @@
           <el-input-number style = 'width: 100%' v-model="form.ratio" :precision="2" :step="0.1" :max="1" :min="0"></el-input-number>
         </el-form-item>
 
-        <el-form-item label="故障线路:">
+        <el-form-item label="故障时间:">
         <el-date-picker
           style = 'width: 100%'
           :clearable = 'false'
           v-model="form.time"
           format = 'yyyy-MM-dd HH:mm:ss'
           type="datetime"
-          placeholder="选择日期时间">
+          placeholder="请选择故障时间">
         </el-date-picker>
         </el-form-item>
       </el-form>
