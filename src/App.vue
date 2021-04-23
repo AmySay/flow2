@@ -82,6 +82,7 @@ export default {
         console.log(this.form)
         addLineEvent({...this.form}).then(res => {
           this.$message.success('新增线路故障信息成功');
+          this.showEventModal = false
         })
           /*.catch(() => {
           this.$message.error('新增线路故障信息失败');
