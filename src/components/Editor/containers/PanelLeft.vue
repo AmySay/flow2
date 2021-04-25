@@ -71,8 +71,16 @@
               icon: '',
               enable: true,
               children: this.devices[k].map(item => {
-                  const height = $X.$X.iconStyle[item.name].height
-                  const width = $X.$X.iconStyle[item.name].width
+                let height,width,anchorPoints,defaultIcon = 80;
+                try {
+                  height = $X.$X.iconStyle[item.name].height ?  $X.$X.iconStyle[item.name].height : defaultIcon
+                  width = $X.$X.iconStyle[item.name].width ? $X.$X.iconStyle[item.name].width : defaultIcon
+                  anchorPoints = $X.$X.iconStyle[item.name].anchorPoints
+                }catch (e){
+                  height =defaultIcon
+                  width = defaultIcon
+                  anchorPoints = [ [0, 0], [0, 1], [1, 0], [1, 1]]
+                }
                   return {
                     shape: item.name,
                     originId: item.id,
@@ -80,11 +88,11 @@
                     data: JSON.stringify(item),
                     defaultLabel: '',
                     enable: true,
-                    width: Number(width) / 2,
-                    height: Number(height) / 2,
-                    minWidth: 20,
-                    minHeight: 20,
-                    anchorPoints: $X.$X.iconStyle[item.name].anchorPoints,
+                    width: width === defaultIcon  ? defaultIcon :  Number(width) / 2,
+                    height: height === defaultIcon ? defaultIcon : Number(height) / 2,
+                    minWidth: defaultIcon,
+                    minHeight: defaultIcon,
+                    anchorPoints,
                     shapeControl: $X.$X.shapeControl,
                     icon: item.imgUrl
                   }

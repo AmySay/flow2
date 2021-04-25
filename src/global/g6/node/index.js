@@ -18,8 +18,16 @@ const obj = {
 export default function (G6, devices) {
   if (devices && devices.length) {
     devices = devices.map(device => {
-      let height = $X.$X.iconStyle[device.name].height
-      let width = $X.$X.iconStyle[device.name].width
+      let height,width;
+      let defaultIcon = 80;
+      try {
+         height = $X.$X.iconStyle[device.name].height ?  $X.$X.iconStyle[device.name].height :defaultIcon
+         width = $X.$X.iconStyle[device.name].width ? $X.$X.iconStyle[device.name].width :defaultIcon
+      }catch (e){
+         height = defaultIcon
+         width = defaultIcon
+      }
+
       return {
         name: device.name,
         data: JSON.stringify(device),

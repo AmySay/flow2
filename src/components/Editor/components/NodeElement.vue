@@ -29,6 +29,7 @@
         display: block;
         position: relative;
         overflow: hidden;
+        object-fit:contain;
       }
     }
   }

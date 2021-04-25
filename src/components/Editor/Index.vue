@@ -231,7 +231,8 @@ import {CanvasRenderer} from 'echarts/renderers';
 
 echarts.use([LineChart, GridComponent, CanvasRenderer]);
 
-
+import {icon} from '@/global/g6/node/devices'
+console.log(icon)
 export default {
   name: 'MaterialsEditor',
   components: {
@@ -350,7 +351,7 @@ export default {
         this.devices = _.groupBy(res.data, 'typeId')
       } else {
         getDevice().then(res => {
-          localStorage.setItem('devices', JSON.stringify(res.data))
+          localStorage.setItem('devices', JSON.stringify(res.data.concat(icon)))
           this.devices = _.groupBy(res.data, 'typeId')
           window.location.reload()
         })
