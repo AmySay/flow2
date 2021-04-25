@@ -58,8 +58,8 @@ export default function (G6, devices) {
             iconStyle: {
               width: width / 2,
               height: height / 2,
-              left: -width / 4,
-              top: -height / 4
+              left: height === defaultIcon ?-width / 2:  -width / 4,
+              top:height === defaultIcon ?-height / 2:  -height / 4
             },
             style: {
               fill: '#f9f9f9',
