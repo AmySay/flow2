@@ -15,13 +15,14 @@ export default function(cfg,group) {
   } = cfg
   let shape = group.getFirst()
   let name = shape.get('name')
-  if (name === '交流母线') {
-    let k = 0
-    while (k < 1) {
-      k = k + 0.02
-      anchorPoints.push([k,0],[k,1])
-    }
-  }
+  console.log(name)
+  // if (name === '交流母线') {
+  //   let k = 0
+  //   while (k < 1) {
+  //     k = k + 0.1
+  //     anchorPoints.push([k,0],[k,1])
+  //   }
+  // }
   /*anchorPoints.push([0,0],
    [0.25,0],
    [0.5,0],
