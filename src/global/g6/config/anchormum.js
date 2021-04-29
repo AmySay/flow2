@@ -12,20 +12,20 @@ export default {
       fill: '#FFFFFF',
       fillOpacity: 0,
       stroke: '#000',
-      strokeOpacity: 1,
+      strokeOpacity: 0,
       cursor: 'crosshair'
     },
     hover: {
-      fillOpacity: 1,
-      strokeOpacity: 1
+      fillOpacity: 0,
+      strokeOpacity: 0
     },
     unhover: {
       fillOpacity: 0,
       strokeOpacity: 0
     },
     active: {
-      fillOpacity: 1,
-      strokeOpacity: 1
+      fillOpacity: 0,
+      strokeOpacity: 0
     },
     inactive: {
       fillOpacity: 0,

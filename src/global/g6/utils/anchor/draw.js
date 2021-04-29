@@ -6,7 +6,7 @@
 
 import config from '../../config'
 
-export default function(cfg,group) {
+export default async function(cfg,group) {
   let {
     anchorPoints,
     width,
@@ -16,30 +16,11 @@ export default function(cfg,group) {
   let shape = group.getFirst()
   let name = shape.get('name')
   console.log(name)
-  // if (name === '交流母线') {
-  //   let k = 0
-  //   while (k < 1) {
-  //     k = k + 0.1
-  //     anchorPoints.push([k,0],[k,1])
-  //   }
-  // }
-  /*anchorPoints.push([0,0],
-   [0.25,0],
-   [0.5,0],
-   [0.75,0],
-   [1,0],
-   [1,0.25],
-   [1,0.5],
-   [1,0.75],
-   [1,1],
-   [0.75,1],
-   [0.5,1],
-   [0.25,1],
-   [0,1],
-   [0,0.75],
-   [0,0.5],
-   [0,0.25])
-   }*/
+  let style = config.anchormum.style.default
+  if (name === '交流母线'){
+    style = config.anchor.style.default
+  }
+  console.log(style)
   if (anchorPoints && anchorPoints.length) {
     for (let i = 0,len = anchorPoints.length; i < len; i++) {
       let anchorX
@@ -79,7 +60,7 @@ export default function(cfg,group) {
           x: anchorX,
           y: anchorY,
           // 锚点默认样式
-          ...config.anchor.style.default,
+          ...style,
           fill: flag ? 'red' : config.anchor.style.default.fill
         }
       })
