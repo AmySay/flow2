@@ -90,8 +90,8 @@
                     enable: true,
                     width: Number(width) / 2,
                     height: Number(height) / 2,
-                    minWidth: 40,
-                    minHeight: 40,
+                    minWidth: 20,
+                    minHeight: 20,
                     anchorPoints,
                     shapeControl: $X.$X.shapeControl,
                     icon: item.imgUrl
