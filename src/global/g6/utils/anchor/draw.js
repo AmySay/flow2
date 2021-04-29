@@ -16,9 +16,9 @@ export default async function(cfg,group) {
   let shape = group.getFirst()
   let name = shape.get('name')
   console.log(name)
-  let style = config.anchormum.style.default
+  let style = config.anchor.style.default
   if (name === '交流母线'){
-    style = config.anchor.style.default
+    style = config.anchormum.style.default
   }
   console.log(style)
   if (anchorPoints && anchorPoints.length) {
