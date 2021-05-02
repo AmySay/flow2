@@ -1,3 +1,46 @@
+
+.yutao {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f8f9fa;
+  .title{
+    z-index: 9;
+    font-size: 35px;
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .svg-box {
+    position: absolute;
+    right: 300px;
+    left: 0;
+    height: 100%;
+  }
+  .right_content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    right: 0;
+  }
+  .button_content {
+    padding: 10px;
+  }
+}
+.flex_layout {
+  height: calc(100% - 94px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  .flex—item {
+    flex: 1;
+    flex-shrink: 0;
+  }
+}
+
 #caozhenT943{
   width: 100%;
   height: 100%;
@@ -5,7 +48,7 @@
 }
 .index-style {
   width: 100%;
-  height: calc(~"100% - 4px");
+  height: 100%;
   z-index: 1;
   .path-svg{
     width:100%;
