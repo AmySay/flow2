@@ -7,12 +7,12 @@
 export default {
   style: {
     default: {
-      radius: 3,
+      radius: 1,
       symbol: 'circle',
       fill: '#FFFFFF',
       fillOpacity: 0,
-      stroke: '#1890FF',
-      strokeOpacity: 0,
+      stroke: '#000',
+      strokeOpacity: 1,
       cursor: 'crosshair'
     },
     hover: {

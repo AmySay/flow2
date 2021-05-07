@@ -1,7 +1,7 @@
 /**
  * Created by OXOYO on 2019/7/8.
  *
- * 锚点背景配置
+ * 锚点配置
  */
 
 export default {
@@ -9,23 +9,23 @@ export default {
     default: {
       radius: 1,
       symbol: 'circle',
-      fill: '#1890FF',
+      fill: '#FFFFFF',
       fillOpacity: 0,
-      stroke: '#1890FF',
+      stroke: '#000',
       strokeOpacity: 0,
       cursor: 'crosshair'
     },
     hover: {
-      fillOpacity: 1,
-      strokeOpacity: 1
+      fillOpacity: 0,
+      strokeOpacity: 0
     },
     unhover: {
       fillOpacity: 0,
       strokeOpacity: 0
     },
     active: {
-      fillOpacity: 0.3,
-      strokeOpacity: 0.5
+      fillOpacity: 0,
+      strokeOpacity: 0
     },
     inactive: {
       fillOpacity: 0,

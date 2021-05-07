@@ -17,7 +17,11 @@ export default function (name, value, item) {
           case 'anchorPoint':
             if (value) {
               child.show()
-              child.attr(config.anchor.style.hover)
+              if (item._cfg.currentShape === '交流母线'){
+                child.attr(config.anchormum.style.hover)
+              }else{
+                child.attr(config.anchor.style.hover)
+              }
             } else {
               child.attr(config.anchor.style.unhover)
               child.hide()
