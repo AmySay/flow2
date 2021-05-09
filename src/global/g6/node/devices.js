@@ -1,11 +1,16 @@
 export const icon = [{
+  id: 54,
+  imgUrl: require('@/assets/images/icon/busb.png'),
+  name: '交流母线',
+  type: '电网',
+  typeId: '2',
+},{
   id: 0,
   imgUrl: require('@/assets/images/icon/1.png'),
   name: '1',
   type: 'icon',
   typeId: 'icon',
 },
-
   {
     id: 1,
     imgUrl: require('@/assets/images/icon/2.png'),
