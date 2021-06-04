@@ -354,13 +354,14 @@
       },
       handleToolClick (item, val) {
         let _t = this
-        console.log('handleToolClick---------', item.name, val)
+        console.log('handleToolClick---------', item, val)
         if (item.disabled) {
           return
         }
         let payload = {
           context: 'ToolBar',
-          name: item.name
+          name: item.name,
+          item
         }
         switch (item.name) {
         case 'fill':

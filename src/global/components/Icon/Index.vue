@@ -31,13 +31,6 @@ export default {
   props: {
     type: String
   },
-  data() {
-    return {
-      styleObj: {
-        // background:'url(./flow2/src/assets/images/toolbar/${this.type}.png)`
-      }
-    }
-  },
   methods: {
     isCN(v) {
       return /[\u4e00-\u9fa5]/.test(v)

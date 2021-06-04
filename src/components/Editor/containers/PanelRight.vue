@@ -8,6 +8,15 @@
 
 .el-tabs{
   height: 100%;
+  .content{
+    .toolbarIcon{
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      background-size: cover;
+      margin-right: 5px;
+    }
+  }
 }
 </style>
 
@@ -24,7 +33,11 @@
         <CardItem title="属性设置" :enableFold="true" :bold="true">
           <Details :originDataObj='originDataObj' :eventItem='eventItem'></Details>
         </CardItem>
-
+      </el-tab-pane>
+      <el-tab-pane :label="toolbarInfo.item.icon" name="three">
+        <div class="content" title="title">
+          <img  v-for  = '(item,key) in toolbarInfo.item.child' :key = 'key' class  = 'toolbarIcon' :src='require(`../../../assets/images/toolbar/${item.icon}.png`)' alt=""/>
+        </div>
       </el-tab-pane>
     </el-tabs>
   </CardBox>
@@ -54,6 +67,12 @@
           return {}
         }
       },
+      toolbarInfo: {
+        type: Object,
+        default: () => {
+          return {}
+        }
+      },
       devices: {
         type: Object,
         default: () => {
@@ -67,9 +86,15 @@
         }
       }
     },
-    data(){
-      return {
-        activeName:'first'
+    computed:{
+      activeName:{
+        get(){
+          if(Object.entries(this.toolbarInfo).length) return 'three'
+          return 'first'
+        },
+        set(val){
+          return val
+        }
       }
     },
     methods: {

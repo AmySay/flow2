@@ -86,7 +86,7 @@ export default new Vuex.Store({
           name: '绘图模式',
           label: '绘图模式',
           type: 'normal',
-          icon: '开始潮流计算',
+          icon: '潮流计算模式',
           enable: true,
           enableMode: ['edit'],
           disabled: false,
@@ -97,55 +97,57 @@ export default new Vuex.Store({
             style: {},
             divider: false
           },
+          child:[
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '开始潮流计算',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '波形单位设定',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '生成结果报告',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+          ]
         },
-        {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '绘图模式',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        },
-        {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '波形单位设定',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        }, {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '生成结果报告',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        },
-
         // 谐波分析模式
         {
           name: '绘图模式',
@@ -162,67 +164,75 @@ export default new Vuex.Store({
             style: {},
             divider: false
           },
-        }, {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '开始谐波计算',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        }, {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '扫频分析',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        }, {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '谐波波形',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        }, {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '波形单位设定',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        }, {
+          child:[
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '开始谐波计算',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '扫频分析',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '谐波波形',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '波形单位设定',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+          ]
+        },
+
+        {
           name: '绘图模式',
           label: '绘图模式',
           type: 'normal',
@@ -237,52 +247,58 @@ export default new Vuex.Store({
             style: {},
             divider: false
           },
-        }, {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '三相接地短路',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        }, {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '单相接地短路',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        }, {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '三相断路',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
+          child:[
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '三相接地短路',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '单相接地短路',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '三相断路',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+          ]
         },
+
         // 继电保护
         {
           name: '绘图模式',
@@ -299,38 +315,42 @@ export default new Vuex.Store({
             style: {},
             divider: false
           },
+          child:[
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '设置故障',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '运行继电保护',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+          ]
         },
-        {
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '设置故障',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        },{
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '运行继电保护',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
-        },
+
         // 可靠性计算模式
         {
           name: '绘图模式',
@@ -347,21 +367,24 @@ export default new Vuex.Store({
             style: {},
             divider: false
           },
-        },{
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '可靠性计算',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
+          child:[
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '可靠性计算',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+          ]
         },
         // 时域仿真模式
         {
@@ -379,21 +402,24 @@ export default new Vuex.Store({
             style: {},
             divider: false
           },
-        },{
-          name: '绘图模式',
-          label: '绘图模式',
-          type: 'normal',
-          icon: '时域仿真',
-          enable: true,
-          enableMode: ['edit'],
-          disabled: false,
-          disabledMode: ['edit'],
-          toolbar: {
-            enable: true,
-            position: 'left',
-            style: {},
-            divider: false
-          },
+          child:[
+            {
+              name: '绘图模式',
+              label: '绘图模式',
+              type: 'normal',
+              icon: '时域仿真',
+              enable: true,
+              enableMode: ['edit'],
+              disabled: false,
+              disabledMode: ['edit'],
+              toolbar: {
+                enable: true,
+                position: 'left',
+                style: {},
+                divider: false
+              },
+            },
+          ]
         },
 
 

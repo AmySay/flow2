@@ -178,7 +178,7 @@
     <ToolBar></ToolBar>
     <Sketchpad></Sketchpad>
 <!--    <PanelLeft :devices='devices'></PanelLeft>-->
-    <PanelRight :originDataObj='originDataObj' :eventItem='eventItem' :devices='devices'></PanelRight>
+    <PanelRight :originDataObj='originDataObj' :eventItem='eventItem' :devices='devices' :toolbarInfo = 'toolbarInfo'></PanelRight>
     <PreviewModel></PreviewModel>
     <ContextMenu></ContextMenu>
   </div>
@@ -262,6 +262,7 @@ export default {
         }
       ],
       devices: {},
+      toolbarInfo: {},
       eventItem: {},
       originDataObj: {},
       editorInfo: {},
@@ -1202,6 +1203,10 @@ export default {
               _t.editor.updateItem(node, position)
             }
           })
+          break
+        case '绘图模式':
+          console.log(info,'item')
+          this.toolbarInfo = info
           break
       }
       if (isRecord) {
