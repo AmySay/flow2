@@ -26,7 +26,6 @@
       flex-wrap: nowrap;
       justify-content: flex-start;
       align-content: flex-start;
-      flex: 1 1 auto;
       z-index: 10;
 
       &.left {
@@ -103,7 +102,7 @@
                     style="vertical-align: middle;"
                   >
                   </XIcon>
-                  <Icon type="ios-arrow-down"></Icon>
+<!--                  <Icon type="ios-arrow-down"></Icon>-->
                 </div>
               </template>
               <template v-else>
@@ -114,7 +113,7 @@
                       style="vertical-align: middle;"
                     >
                     </XIcon>
-                    <Icon type="ios-arrow-down"></Icon>
+<!--                    <Icon type="ios-arrow-down"></Icon>-->
                   </div>
                 </XColorPicker>
               </template>
@@ -148,7 +147,7 @@
                     </XIcon>
                     <span v-else>{{ item.children[item.selected].label }}</span>
                   </template>
-                  <Icon type="ios-arrow-down"></Icon>
+<!--                  <Icon type="ios-arrow-down"></Icon>-->
                 </div>
               </template>
               <template v-else>
@@ -171,7 +170,7 @@
                       </XIcon>
                       <span v-else>{{ item.children[item.selected].label }}</span>
                     </template>
-                    <Icon type="ios-arrow-down"></Icon>
+<!--                    <Icon type="ios-arrow-down"></Icon>-->
                   </div>
                   <DropdownMenu slot="list">
                     <DropdownItem
@@ -280,6 +279,7 @@
       toolMap () {
         let _t = this
         let toolMap = {}
+        console.log(_t.toolList)
         _t.toolList.forEach(item => {
           if (item.enable && item.toolbar && item.toolbar.enable) {
             let position = item.toolbar.position

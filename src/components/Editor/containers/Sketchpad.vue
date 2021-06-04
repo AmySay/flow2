@@ -15,13 +15,9 @@
 
   .sketchpad {
     display: inline-block;
-    width: 960px;
-    height: 1200px;
+    width: 100%;
+    height: 100%;
     position: absolute;
-    left: 50%;
-    margin-left: -480px;
-    margin-top: 100px;
-    margin-bottom: 100px;
     z-index: 100;
     background: #FFFFFF;
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, .1);
@@ -69,7 +65,9 @@ export default {
           boxStyle[ key ] = positionVal + width + 'px'
         }
       })
-      return boxStyle
+      return {
+        right:0
+      }
     },
   },
   methods: {

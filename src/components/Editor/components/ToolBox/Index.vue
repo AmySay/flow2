@@ -24,7 +24,6 @@
         line-height: 30px;
         vertical-align: middle;
         text-align: center;
-        opacity: .3;
         margin: 0 2px;
         color: #000000;
 

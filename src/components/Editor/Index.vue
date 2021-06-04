@@ -177,8 +177,8 @@
   <div class="materials-editor" @click="handleEditorClick" v-else>
     <ToolBar></ToolBar>
     <Sketchpad></Sketchpad>
-    <PanelLeft :devices='devices'></PanelLeft>
-    <PanelRight :originDataObj='originDataObj' :eventItem='eventItem'></PanelRight>
+<!--    <PanelLeft :devices='devices'></PanelLeft>-->
+    <PanelRight :originDataObj='originDataObj' :eventItem='eventItem' :devices='devices'></PanelRight>
     <PreviewModel></PreviewModel>
     <ContextMenu></ContextMenu>
   </div>
@@ -1290,10 +1290,10 @@ export default {
     ,
     bindUnload() {
       // todo
-      window.onbeforeunload = function (event) {
-        event.returnValue = false
-        return false
-      }
+      // window.onbeforeunload = function (event) {
+      //   event.returnValue = false
+      //   return false
+      // }
     }
     ,
     handleEditorClick() {

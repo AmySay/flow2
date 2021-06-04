@@ -6,27 +6,23 @@
 
 <style scoped lang="less" rel="stylesheet/less">
   .node-element {
-    /*display: inline-block;*/
+    display: inline-block;
     text-align: center;
     margin: 2px;
     border: 1px solid transparent;
-
     &:hover {
       border-color: rgba(0, 0, 0, .1);
       cursor: move;
     }
     .content {
       display: inline-block;
-      width: 100%;
-      height: 100%;
-
       .icon {
         left: 1px;
         top: 1px;
         text-align: center;
-        width: 100%;
         height: 30px;
-        display: block;
+        max-width: 50px;
+        display: inline-block;
         position: relative;
         overflow: hidden;
         object-fit:contain;
@@ -44,7 +40,6 @@
   >
     <div class="content" :title="title">
       <img class="icon" :src="info.icon" />
-      <div>{{info.label}}</div>
     </div>
   </div>
 </template>
@@ -78,7 +73,7 @@
       },
       height: {
         type: Number,
-        default: 60
+        default: 40
       }
     },
     computed: {
