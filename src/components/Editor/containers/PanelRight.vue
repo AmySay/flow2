@@ -34,8 +34,8 @@
           <Details :originDataObj='originDataObj' :eventItem='eventItem'></Details>
         </CardItem>
       </el-tab-pane>
-      <el-tab-pane :label="toolbarInfo.item.icon" name="three">
-        <div class="content" title="title">
+      <el-tab-pane :label="toolbarInfo && toolbarInfo.item && toolbarInfo.item.icon" name="three">
+        <div class="content" title="title" v-if  = 'toolbarInfo.item && toolbarInfo.item.child'>
           <img  v-for  = '(item,key) in toolbarInfo.item.child' :key = 'key' class  = 'toolbarIcon' :src='require(`../../../assets/images/toolbar/${item.icon}.png`)' alt=""/>
         </div>
       </el-tab-pane>
@@ -72,8 +72,7 @@
         default: () => {
           return {}
         }
-      },
-      devices: {
+      }, devices: {
         type: Object,
         default: () => {
           return {}

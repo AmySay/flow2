@@ -99,6 +99,7 @@
               <el-table-column
                 v-for='item in tableHeader'
                 align="center"
+                :key = 'item'
                 :prop="item.prop"
                 :label="item.label">
               </el-table-column>
@@ -177,8 +178,9 @@
   <div class="materials-editor" @click="handleEditorClick" v-else>
     <ToolBar></ToolBar>
     <Sketchpad></Sketchpad>
-<!--    <PanelLeft :devices='devices'></PanelLeft>-->
-    <PanelRight :originDataObj='originDataObj' :eventItem='eventItem' :devices='devices' :toolbarInfo = 'toolbarInfo'></PanelRight>
+    <!--    <PanelLeft :devices='devices'></PanelLeft>-->
+    <PanelRight :originDataObj='originDataObj' :eventItem='eventItem' :devices='devices'
+                :toolbarInfo='toolbarInfo'></PanelRight>
     <PreviewModel></PreviewModel>
     <ContextMenu></ContextMenu>
   </div>
@@ -232,6 +234,7 @@ import {CanvasRenderer} from 'echarts/renderers';
 echarts.use([LineChart, GridComponent, CanvasRenderer]);
 
 import {icon} from '@/global/g6/node/devices'
+
 console.log(icon)
 export default {
   name: 'MaterialsEditor',
@@ -288,7 +291,7 @@ export default {
     ])
   },
   methods: {
-    settingparametersFn(){
+    settingparametersFn() {
       console.log(this.formData)
       settingparameters({...this.formData}).then(() => {
         startrunning()
@@ -703,8 +706,7 @@ export default {
       _t.mode = name
       _t.editor.setMode(name)
       // 更新toolList
-      let toolList
-      toolList = _t.toolList.map(item => {
+      let toolList = _t.toolList.map(item => {
         if (item.hasOwnProperty('enableMode') && Array.isArray(item.enableMode)) {
           item.enable = item.enableMode.includes(name)
         }
@@ -1205,7 +1207,7 @@ export default {
           })
           break
         case '绘图模式':
-          console.log(info,'item')
+          console.log(info, 'item')
           this.toolbarInfo = info
           break
       }
@@ -1270,6 +1272,7 @@ export default {
 
     bindShortcuts() {
       let _t = this
+      console.log(_t.toolList,'toolList')
       _t.toolList.forEach(item => {
         if (item.enable && item.shortcuts) {
           Mousetrap.bind(item.shortcuts, function (e) {
