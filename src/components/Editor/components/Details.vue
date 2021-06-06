@@ -5,13 +5,13 @@
 
 <style scoped lang="less" rel="stylesheet/less">
   .nodeDetails {
+    height:398px;
+    overflow-y: auto;
     display: inline-block;
     width: calc(100% - 20px);
     box-sizing: content-box;
     padding: 0 10px;
     padding-top: 10px;
-    height: 100%;
-    overflow: hidden;
     .el-form-item {
       margin-bottom: 5px;
     }
@@ -20,10 +20,6 @@
 
 <template>
   <div class="nodeDetails">
-    <div>
-      <span>{{currentShape }}</span>
-      <el-button type="primary" @click="onSubmit" style='margin-left: 10px' :disabled="preview">提交</el-button>
-    </div>
     <el-form :model="form" label-position='top' label-width="100px">
       <el-form-item label="tagName" prop="tagName" class='el-form-details'>
         <el-select

@@ -8,6 +8,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import utils from './global/utils'
+import './global/utils/directive' // 自定义指令
 import components from './global/components'
 import config from './config'
 import './assets/styles/main.less'

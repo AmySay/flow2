@@ -99,7 +99,7 @@
               <el-table-column
                 v-for='item in tableHeader'
                 align="center"
-                :key = 'item'
+                :key='item'
                 :prop="item.prop"
                 :label="item.label">
               </el-table-column>
@@ -183,7 +183,22 @@
                 :toolbarInfo='toolbarInfo'></PanelRight>
     <PreviewModel></PreviewModel>
     <ContextMenu></ContextMenu>
+
+    <!--元件信息-->
+    <el-dialog
+      :title="currentShape"
+      :visible.sync="dialogVisible"
+      width="398px"
+    >
+      <Details :originDataObj='originDataObj' :eventItem='eventItem'></Details>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
+
+
 </template>
 
 <script>
@@ -196,6 +211,8 @@ import PanelLeft from './containers/PanelLeft'
 import PanelRight from './containers/PanelRight'
 import PreviewModel from './containers/PreviewModel'
 import ContextMenu from './containers/ContextMenu'
+import Details from './components/Details'
+
 import utils from '@/global/g6/utils'
 // 扩展了节点、边的G6
 import G6 from '@/global/g6/index'
@@ -246,6 +263,7 @@ export default {
     PanelRight,
     PreviewModel,
     ContextMenu,
+    Details
   },
   data() {
     return {
@@ -288,7 +306,14 @@ export default {
       'currentItem',
       'toolList',
       'log'
-    ])
+    ]),
+    currentShape() {
+      if (this.eventItem._cfg && this.eventItem._cfg.currentShape) {
+        return this.eventItem._cfg.currentShape
+      } else {
+        return '--'
+      }
+    }
   },
   methods: {
     settingparametersFn() {
@@ -530,7 +555,7 @@ export default {
         _t.$X.utils.bus.$emit('editor/contextmenu/open', data)
       })
       _t.editor.on('editor:record', function (from) {
-        console.log('editor:record from', from)
+        console.log('editor:record from11', from)
         // 更新操作日志
         _t.$store.commit('editor/log/update', {
           action: 'record',
@@ -569,6 +594,8 @@ export default {
       this.eventItem = event.item
       if (id) this.getOriginData(id)
       _t.editor.setItemState(event.item, 'active', true)
+      console.log('nodeclick')
+      this.dialogVisible = true
     }),
     _nodeMousedown(event) {
       let _t = this
@@ -1272,7 +1299,7 @@ export default {
 
     bindShortcuts() {
       let _t = this
-      console.log(_t.toolList,'toolList')
+      console.log(_t.toolList, 'toolList')
       _t.toolList.forEach(item => {
         if (item.enable && item.shortcuts) {
           Mousetrap.bind(item.shortcuts, function (e) {

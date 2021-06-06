@@ -21,17 +21,14 @@
 </style>
 
 <template>
-  <CardBox placement="right" position="left" :width="300" :title="$t('L10100')" @expand="toggleHandler">
+  <CardBox v-dialog-drag placement="right" position="left" :width="300" title="控制面板" @expand="toggleHandler">
     <el-tabs v-model="activeName" type="border-card">
-      <el-tab-pane label="物料" name="first">
+      <el-tab-pane label="元件设备" name="first">
         <PanelLeft :devices = 'devices'></PanelLeft>
       </el-tab-pane>
-      <el-tab-pane label="配置管理" name="second">
+      <el-tab-pane label="配置" name="second">
         <CardItem :title="$t('L10101')" :enableFold="true" :bold="true">
           <Options></Options>
-        </CardItem>
-        <CardItem title="属性设置" :enableFold="true" :bold="true">
-          <Details :originDataObj='originDataObj' :eventItem='eventItem'></Details>
         </CardItem>
       </el-tab-pane>
       <el-tab-pane :label="toolbarInfo && toolbarInfo.item && toolbarInfo.item.icon" name="three">
