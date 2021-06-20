@@ -7,7 +7,7 @@
 import base from './base'
 
 export default {
-  name: 'x-line',
+  name: 'x-broken',
   extendName: 'line',
   options: {
     ...base

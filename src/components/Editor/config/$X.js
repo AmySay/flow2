@@ -12,7 +12,7 @@ export default {
   lineColor: '#000000',
   strokeOpacity: 1,
   lineWidth: 1,
-  lineType: 'x-line',
+  lineType: 'x-broken',
   lineDash: 'solid',
   startArrow: false,
   endArrow: false,
