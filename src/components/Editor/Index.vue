@@ -528,6 +528,7 @@ export default {
       _t.editor.on('canvas:mouseup', _t._canvasMouseup)
       // _t.editor.on('click', _t._editorClick)
       _t.editor.on('node:click', _t._nodeClick)
+      _t.editor.on('node:dblclick', _t._nodeDblclick)
       _t.editor.on('node:mousedown', _t._nodeMousedown)
       _t.editor.on('node:mouseover', _t._nodeHover)
       _t.editor.on('node:mouseout', _t._nodeOut)
@@ -595,6 +596,9 @@ export default {
       if (id) this.getOriginData(id)
       _t.editor.setItemState(event.item, 'active', true)
       console.log('nodeclick')
+      // this.dialogVisible = true
+    }),
+    _nodeDblclick: _.debounce(function (event) {
       this.dialogVisible = true
     }),
     _nodeMousedown(event) {

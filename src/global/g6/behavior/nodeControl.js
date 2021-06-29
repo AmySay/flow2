@@ -123,7 +123,7 @@ export default {
     onNodeDblclick(event) {
       let _t = this
       if (_t.config.nodeLabel) {
-        _t.nodeLabel.create.call(_t, event)
+        // _t.nodeLabel.create.call(_t, event)
       }
     },
     onNodeContextmenu(event) {
