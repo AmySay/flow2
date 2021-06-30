@@ -190,10 +190,10 @@
       :visible.sync="dialogVisible"
       width="398px"
     >
-      <Details :originDataObj='originDataObj' :eventItem='eventItem'></Details>
+      <Details ref = 'details' :originDataObj='originDataObj' :eventItem='eventItem'></Details>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="onSubmit">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -601,6 +601,11 @@ export default {
     _nodeDblclick: _.debounce(function (event) {
       this.dialogVisible = true
     }),
+    onSubmit(){
+      // 触发子节点方法
+      this.$refs.details.onSubmit()
+      this.dialogVisible = false
+    },
     _nodeMousedown(event) {
       let _t = this
       _t.doClearAllStates()
@@ -678,8 +683,8 @@ export default {
         // _t.editor.zoomTo(ratio)
         _t.editor.zoomTo(ratio, center)
       }
-    }
-    ,
+    },
+
     doAddNode(info) {
       let _t = this
       let node = {
@@ -753,7 +758,9 @@ export default {
       let _t = this
       // 是否记录日志标识
       let isRecord = false
+      console.log(info)
       switch (info.name) {
+
         case 'undo':
         case 'redo':
         case 'clearLog':
@@ -1128,16 +1135,19 @@ export default {
             // no longer need to read the blob so it's revoked
             URL.revokeObjectURL(url)
           } else if (info.data === 'excel') {
-            /!* create a new blank workbook *!/
+            // /!* create a new blank workbook *!/
             let wb = XLSX.utils.book_new();
             let dataList = []
+            console.log( _t.editor.getNodes())
             _t.editor.getNodes().forEach((node, index) => {
+              debugger
               const model = node.getModel()
               if (model.params) {
                 dataList.push(model.params)
               }
             })
-            if (!dataList.length) return
+            console.log(dataList)
+            // if (!dataList.length) return
             const excelData = _.groupBy(dataList, 'originId')
             Object.entries(excelData).forEach(sheet => {
               const sheetData = sheet[1]

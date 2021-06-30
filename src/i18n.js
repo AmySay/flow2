@@ -26,7 +26,8 @@ export default function (Vue, defLang) {
   // i18n实例
   let i18nInstance = new VueI18n({
     locale: defLang,
-    messages: langs.data
+    messages: langs.data,
+  silentTranslationWarn: true,
   })
   // FIXME 覆写iview i18n方法，修复$Modal弹窗报错BUG，【Issues】https://github.com/iview/iview/issues/4769#issuecomment-449851416
   locale.i18n((path, options) => i18nInstance.t(path, options))

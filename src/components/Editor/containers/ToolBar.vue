@@ -713,12 +713,13 @@ export default {
       _t.$X.utils.bus.$emit('editor/tool/trigger', payload)
       // 处理选中，更新toolList
       let toolList
-      _t.toolList.map(target => {
+      toolList =  _t.toolList.map(target => {
         if (target.name === item.name) {
           target.selected = val
         }
         return target
       })
+
       _t.$store.commit('editor/toolList/update', toolList)
     },
     handleToolClick(item, val) {

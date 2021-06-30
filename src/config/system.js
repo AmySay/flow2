@@ -5,6 +5,7 @@
  */
 
 export default {
+  name:'GUI',
   sysToolBar: [
     {
       name: '系统',

@@ -15,7 +15,7 @@ module.exports = {
   outputDir: 'docs',
   // 静态资源目录
   assetsDir: '',
-  productionSourceMap: false,
+  productionSourceMap: true,
   // 开发环境
   devServer: {
     // 代理设置
@@ -39,6 +39,7 @@ module.exports = {
     }
   },
   configureWebpack: {
+    devtool:"source-map",
     output: {
       // path: `${root}/public/assets/`,
       // publicPath: '/lead/assets',
