@@ -316,6 +316,8 @@ export default {
         let endNode = event.item
         let startModel = _t.info.node.getModel()
         let endModel = endNode.getModel()
+        console.log(startModel,'startModel')
+        console.log(endModel,'endModel')
         // type 一样不能连线
         if (endModel && startModel) {
           const endData = JSON.parse(endModel.data)
@@ -324,6 +326,10 @@ export default {
             Message.error(startData.type + '类型相同不能连线！')
             _t.graph.removeItem(_t.drawLine.currentLine)
             return
+          }
+          // 起始点相同不能划线
+          if (startModel.id === endModel.id){
+            return false
           }
         }
         if (_t.drawLine.isMoving) {
@@ -345,7 +351,8 @@ export default {
               // 存储起始点ID，用于拖拽节点时更新线条
               attrs: {
                 start: startModel.id,
-                end: endModel.id
+                end: endModel.id,
+                label:`X: ${event.x.toFixed(2)} Y: ${event.y.toFixed(2)}`
               }
             })
             // 记录操作日志
