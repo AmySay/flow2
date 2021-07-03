@@ -20,7 +20,6 @@ export default async function(cfg,group) {
   if (name === '交流母线'){
     style = config.anchormum.style.default
   }
-  console.log(style)
   if (anchorPoints && anchorPoints.length) {
     for (let i = 0,len = anchorPoints.length; i < len; i++) {
       let anchorX

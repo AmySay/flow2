@@ -9,7 +9,8 @@
  */
 
 // 折线寻径
-export const polylineFinding = function (sNode, tNode, sPort, tPort, offset = 10) {
+export const polylineFinding = function (sNode, tNode, sPort, tPort, offset = 10,cfg) {
+  // sPort = {y:sPort.y+20,x:sPort.x}
   const sourceBBox = sNode && sNode.getBBox ? sNode.getBBox() : getPointBBox(sPort)
   const targetBBox = tNode && tNode.getBBox ? tNode.getBBox() : getPointBBox(tPort)
   // 获取节点带 offset 的区域（扩展区域）
@@ -26,6 +27,7 @@ export const polylineFinding = function (sNode, tNode, sPort, tPort, offset = 10
   filterConnectablePoints(points, tBBox)
   // 用 A-Star 算法寻径
   let polylinePoints = AStar(points, sPoint, tPoint, sBBox, tBBox)
+  console.log(polylinePoints,'polylinePoints')
   return polylinePoints
 }
 

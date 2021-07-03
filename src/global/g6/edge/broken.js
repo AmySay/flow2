@@ -9,8 +9,9 @@ import { polylineFinding } from './polylineFinding'
 export default {
   name: 'x-broken',
   extendName: 'single-line',
+  currentCfg:null,
   options: {
-    ...base,
+    // ...base,
     draw (cfg, group) {
       const { startPoint, endPoint } = cfg
       const controlPoints = this.getControlPoints(cfg)
@@ -19,7 +20,10 @@ export default {
         points.push(controlPoints)
       }
       points.push(endPoint)
-      let path = this.getPath(points)
+      this.currentCfg = cfg
+      let path = this.getPath(points,cfg)
+      console.log(points,'points')
+      console.log(path,'path')
       const keyShape = group.addShape('path', {
         className: 'edge-shape',
         attrs: {
@@ -29,12 +33,19 @@ export default {
       })
       return keyShape
     },
-    getPath (points) {
+    // 响应状态变化
+    getPath (points,cfg) {
       const path = []
       for (let i = 0; i < points.length; i++) {
         const point = points[i]
         if (i === 0) {
           path.push([ 'M', point.x, point.y ])
+          // 这里判断起点是否是母线
+          if (this.currentCfg && this.currentCfg.sourceNode._cfg.currentShape === '交流母线'){
+            // path.push([ 'L', point.x, point.y + 50 ])
+            // path.push([ 'L', point.x - 10, point.y + 50 ])
+            // path.push([ 'L', point.x - 20, point.y + 50 ])
+          }
         } else if (i === points.length - 1) {
           path.push([ 'L', point.x, point.y ])
         } else {
@@ -68,7 +79,7 @@ export default {
       if (!cfg.sourceNode) {
         return cfg.controlPoints
       }
-      return polylineFinding(cfg.sourceNode, cfg.targetNode, cfg.startPoint, cfg.endPoint, 40)
+      return polylineFinding(cfg.sourceNode, cfg.targetNode, cfg.startPoint, cfg.endPoint, 40,cfg)
     }
   }
 }
